@@ -8,7 +8,6 @@ angular.module('Home', []);
 angular.module('myApp', [
   'ngRoute',
   'restangular',
-/*   'overallServices', */
   'matchingServices',
   'Authentication',
   'Home',
@@ -16,17 +15,31 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
+])
+// Poging om chaching van partials (templates) te voorkomen; werkt niet volgens mij    
+.run(function($rootScope, $templateCache) {
+   $rootScope.$on('$viewContentLoaded', function() {
+      $templateCache.removeAll();
+   });
+})
+// deze doet ook niets
+.run(function($rootScope, $templateCache) {
+   $rootScope.$on('$routeChangeStart', function() {
+      $templateCache.removeAll();
+   });
+})
+.config(['$routeProvider', function($routeProvider) {
+	//poging om caching te voorkomen, maar werkt niet...
+	var cacheBuster = Date.now().toString();
   $routeProvider
          .when('/login', {
             controller: 'LoginController',
-            templateUrl: 'authentication/modules/authentication/views/login.html',
+            templateUrl: 'modules/authentication/views/login.html?cachebuster=' + cacheBuster,
             hideMenus: true
         })
        	.when('/home', {
             controller: 'HomeController',
-            templateUrl: 'authentication/modules/home/views/home.html'
+            templateUrl: 'modules/home/views/home.html?cachebuster=' + cacheBuster
         })
   		.otherwise({redirectTo: '/home'});
 }]).
@@ -50,11 +63,6 @@ config(['$resourceProvider', function($resourceProvider) {
             }
         });
     }])
-.run(function($rootScope, $templateCache) {
-   $rootScope.$on('$viewContentLoaded', function() {
-      $templateCache.removeAll();
-   });
-})
 // VOORKOM CACHING van http headers (alleen al voor authentification!!
 .config(['$httpProvider', function($httpProvider) {
     //initialize get if not there

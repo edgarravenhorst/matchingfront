@@ -262,6 +262,7 @@ matchingServices.factory('MatchingRestangularDefer', ['Restangular', 'Flatten', 
 			// make use of $q to create promise
 			var defer = $q.defer();
 			var defer2 = $q.defer();
+			var defer3 = $q.defer();
 			
 			var restAngular = Restangular.withConfig(
 				function(Configurer){
@@ -271,6 +272,7 @@ matchingServices.factory('MatchingRestangularDefer', ['Restangular', 'Flatten', 
 			
 			var _matchingServices = function(){return restAngular.one('services')}
 			var _matchingVraagstukken = function(){return restAngular.one('services/Profiles/actions/allDemandProfilesOfType/')}
+			var _matchingThisIsYou = function(){return restAngular.one('services/Persons/actions/thisIsYou/')}
 					
 			return {
 				getAllServices: function(){
@@ -285,15 +287,16 @@ matchingServices.factory('MatchingRestangularDefer', ['Restangular', 'Flatten', 
 					// return the promise
 					return defer.promise;
 				},
-				getAllVraagstukken: function(){
-					_matchingVraagstukken().post('invoke',{"profileType": {"value": "PERSON_PROFILE"}}).then(
+				thisIsYou: function(){
+					_matchingThisIsYou().post('invoke',{}).then(
 						function(data){
-							defer2.resolve(data.result.value);
+							defer3.resolve(data.result.value[0]);
 						}
 					);
 					
-					return defer2.promise;
-				}
+					return defer3.promise;
+				},
+				
 			}
 			
 }]);

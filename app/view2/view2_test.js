@@ -2,15 +2,22 @@
 
 describe('myApp.view2 module', function() {
 
-  beforeEach(module('myApp.view2'));
+	var scope, view2Ctrl;
+  	beforeEach(module('myApp.view2'));
+  	beforeEach(module('overallServices'));
+  	beforeEach(module('restangular'));
+  	beforeEach(module('matchingServices'));
+  	beforeEach(inject(function ($controller, $rootScope) {  // inject $rootScope
+    	scope = $rootScope.$new();
+    	view2Ctrl = $controller('View2Ctrl',{$scope : scope});
+	}));
 
-  describe('view2 controller', function(){
+  	describe('view2 controller', function(){
 
-    it('should ....', inject(function($controller) {
+    it('should ....', function() {
       //spec body
-      var view2Ctrl = $controller('View2Ctrl');
       expect(view2Ctrl).toBeDefined();
-    }));
+    });
 
   });
 });
