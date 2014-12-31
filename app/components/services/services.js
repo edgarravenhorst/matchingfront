@@ -300,3 +300,45 @@ matchingServices.factory('MatchingRestangularDefer', ['Restangular', 'Flatten', 
 			}
 			
 }]);
+
+matchingServices.factory('RestObjectServiceFlat', ['$http', 'Flatten', '$q',
+	function($http, Flatten, $q){
+		var restObject = function(url){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: url,
+				cache: false
+			})
+			.success(function(data) {
+				defer.resolve(Flatten(data.members));
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			
+			return defer.promise;
+		}
+		return {restObject: restObject};			
+}]);
+
+matchingServices.factory('RestObjectService', ['$http', 'Flatten', '$q',
+	function($http, Flatten, $q){
+		var restObject = function(url){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: url,
+				cache: false
+			})
+			.success(function(data) {
+				defer.resolve(data.members);
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			
+			return defer.promise;
+		}
+		return {restObject: restObject};			
+}]);

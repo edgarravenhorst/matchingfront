@@ -1,3 +1,37 @@
 ﻿<h1>Home</h1>
 <p>Hi {{thisIsYou.title}}. You're logged in!!</p>
 <p><a href="#/login">Logout</a></a></p>
+<!--
+<p>{{firstName}}</p>
+<p>{{middleName}}</p>
+<p>{{lastName}}</p>-->
+<h3>Static</h3>
+<ul>
+	<li>roles: {{roles}}</li>
+	<li>uniqueActorId: {{uniqueActorId}}</li>
+</ul>
+<h3>Dynamic</h3>
+<h4>All Properties and their values</h4>
+<ul>
+	<li 
+		ng-repeat="property in allOfTypeProperty" 
+		ng-hide="property.value===''"
+	>
+		{{property.name}} : {{property.value}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeProperty}}</p> -->
+<h4>All Collection and their links</h4>
+<ul>
+	<li ng-repeat="collection in allOfTypeCollection">
+		{{collection.name}} : {{collection.link}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeCollection}}</p> -->
+<h4>All Actions and their links</h4>
+<ul>
+	<li ng-repeat="action in allOfTypeAction">
+		{{action.name}} : {{action.link}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeAction}}</p> -->

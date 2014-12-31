@@ -7,8 +7,10 @@ angular.module('Authentication')
     function ($scope, $templateCache, $rootScope, $location, AuthenticationService) {
         
         //Pogingen om caching te voorkomen, maar werkt niet goed
-    	$templateCache.remove('/modules/home/views/home.html');
+    	/*
+$templateCache.remove('/modules/home/views/home.html');
     	$templateCache.removeAll();
+*/
     	        
         // reset login status
         AuthenticationService.ClearCredentials();
