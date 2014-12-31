@@ -13,9 +13,9 @@ angular.module('Home')
     
     	//Pogingen om caching te voorkomen, maar werkt niet goed
     	/*
-$templateCache.remove('/modules/home/views/home.html');
+		$templateCache.remove('/modules/home/views/home.html');
     	$templateCache.removeAll();
-*/
+		*/
     	
 		MatchingRestangularDefer.thisIsYou().then(
 			function(data){
