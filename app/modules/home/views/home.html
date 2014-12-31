@@ -35,3 +35,22 @@
 	</li>
 </ul>
 <!-- <p>{{allOfTypeAction}}</p> -->
+<h4>Level deeper: mySavedMatches collection and their links</h4>
+<ul>
+	<li ng-repeat="match in listOfMySavedMatches">
+		{{match.title}} : {{match.href}}
+	</li>
+</ul>
+<h4>Again deeper: first saved match</h4>
+<ul>
+	<li 
+		ng-repeat="property in allOfSavedMatchTypeProperty" 
+		ng-hide="property.value===''"
+	>
+		{{property.name}} : {{property.value}}
+	</li>
+</ul>
+<h3>Tests</h3>
+<p>{{test1}}</p>
+<p>{{test2}}</p>
+<p>{{test3}}</p>

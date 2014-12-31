@@ -322,8 +322,8 @@ matchingServices.factory('RestObjectServiceFlat', ['$http', 'Flatten', '$q',
 		return {restObject: restObject};			
 }]);
 
-matchingServices.factory('RestObjectService', ['$http', 'Flatten', '$q',
-	function($http, Flatten, $q){
+matchingServices.factory('RestObjectService', ['$http', '$q',
+	function($http, $q){
 		var restObject = function(url){
 			var defer=$q.defer();
 			$http({
@@ -341,4 +341,77 @@ matchingServices.factory('RestObjectService', ['$http', 'Flatten', '$q',
 			return defer.promise;
 		}
 		return {restObject: restObject};			
+}]);
+
+matchingServices.factory('RestCollectionService', ['$http', '$q',
+	function($http, $q){
+		var restObject = function(url){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: url,
+				cache: false
+			})
+			.success(function(data) {
+				defer.resolve(data.value);
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			
+			return defer.promise;
+		}
+		return {restObject: restObject};			
+}]);
+
+matchingServices.factory('FormatRestObjectService', [
+	function(){
+	
+		var _allOfProperty = function(restfulOject){
+			var _allOfTypeProperty = [];
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'property'){
+					var tmp = {};
+					tmp={name : key, value : value.value};
+					_allOfTypeProperty.push(tmp);
+				}						
+			});
+			return _allOfTypeProperty;
+		}
+		
+		var _allOfCollection = function(restfulOject){
+			var _allOfTypeCollection = [];
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'collection'){
+					var tmp = {};
+					tmp={name : key, link : value.links[0].href};
+					_allOfTypeCollection.push(tmp);
+				}							
+			});
+			return _allOfTypeCollection;
+		}
+		
+		var _allOfAction = function(restfulOject){
+			var _allOfTypeAction = [];
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'action'){
+					var tmp = {};
+					tmp={name : key, link : value.links[0].href};
+					_allOfTypeAction.push(tmp);
+				}							
+			});
+			return _allOfTypeAction;
+		}				
+						
+		return {
+			allOfTypeProperty: function(restfulOject){
+					return _allOfProperty(restfulOject);
+				},
+			allOfTypeCollection: function(restfulOject){
+					return _allOfCollection(restfulOject);
+				},
+			allOfTypeAction: function(restfulOject){
+					return _allOfAction(restfulOject);
+				}
+		};
 }]);

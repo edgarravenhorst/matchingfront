@@ -7,7 +7,9 @@ angular.module('Home')
     '$templateCache',
     'MatchingRestangularDefer',
     'RestObjectService',
-    function ($scope, $templateCache, MatchingRestangularDefer, RestObjectService) {
+    'RestCollectionService',
+    'FormatRestObjectService',
+    function ($scope, $templateCache, MatchingRestangularDefer, RestObjectService, RestCollectionService, FormatRestObjectService) {
     
     	//Pogingen om caching te voorkomen, maar werkt niet goed
     	/*
@@ -20,38 +22,32 @@ $templateCache.remove('/modules/home/views/home.html');
 				$scope.thisIsYou = data;
 				RestObjectService.restObject(data.href).then(
 					function(data){
+						/*static*/
 						$scope.firstName = data.firstName.value;
 						$scope.middleName = data.middleName.value;
 						$scope.lastName = data.lastName.value;
 						$scope.roles = data.roles.value;
 						$scope.uniqueActorId = data.uniqueActorId.value;
-						var allOfTypeProperty = [];
-						var allOfTypeCollection = [];
-						var allOfTypeAction = [];
-						angular.forEach(data, function(value, key){
-							if(value.memberType === 'property'){
-								var tmp = {};
-								tmp={name : key, value : value.value};
-								allOfTypeProperty.push(tmp);
+						/*dynamic*/
+						$scope.allOfTypeProperty = FormatRestObjectService.allOfTypeProperty(data);
+						$scope.allOfTypeCollection = FormatRestObjectService.allOfTypeCollection(data);
+						$scope.allOfTypeAction = FormatRestObjectService.allOfTypeAction(data);
+						/*level deeper to collection 'mySavedMatches'*/
+						var _link_mySavedMatches = data.mySavedMatches.links[0].href;
+						RestCollectionService.restObject(_link_mySavedMatches).then(
+							function(data){
+								$scope.listOfMySavedMatches = data;
+								/*Again level deeper: first saved match*/
+								var _link_object = data[0].href;
+								RestObjectService.restObject(_link_object).then(
+									function(data){
+										$scope.allOfSavedMatchTypeProperty = FormatRestObjectService.allOfTypeProperty(data);
+									}
+								);
 							}
-							if(value.memberType === 'collection'){
-								var tmp = {};
-								tmp={name : key, link : value.links[0].href};
-								allOfTypeCollection.push(tmp);
-							}
-							if(value.memberType === 'action'){
-								var tmp = {};
-								tmp={name : key, link : value.links[0].href};
-								allOfTypeAction.push(tmp);
-							}							
-						});
-						$scope.allOfTypeProperty = allOfTypeProperty;
-						$scope.allOfTypeCollection = allOfTypeCollection;
-						$scope.allOfTypeAction = allOfTypeAction;
-
+						);
 					}
 				);
 			}
 		);
-		
     }]);
