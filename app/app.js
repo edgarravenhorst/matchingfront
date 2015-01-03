@@ -3,6 +3,7 @@
 // declare modules
 angular.module('Authentication', []);
 angular.module('Home', []);
+angular.module('Person', []);
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
@@ -11,10 +12,12 @@ angular.module('myApp', [
   'matchingServices',
   'Authentication',
   'Home',
+  'Person',
   'ngCookies',
   'myApp.view1',
   'myApp.view2',
-  'myApp.version'
+  'myApp.version',
+  'Filters'
 ])
 // Poging om chaching van partials (templates) te voorkomen; werkt niet volgens mij    
 .run(function($rootScope, $templateCache) {
@@ -40,6 +43,10 @@ angular.module('myApp', [
        	.when('/home', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html?cachebuster=' + cacheBuster
+        })
+        .when('/person/:personUrl', {
+        	controller: 'PersonController',
+        	templateUrl: 'modules/person/views/person.html'
         })
   		.otherwise({redirectTo: '/home'});
 }]).

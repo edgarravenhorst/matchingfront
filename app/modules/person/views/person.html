@@ -1,0 +1,27 @@
+<h1>Person details of {{personName}}</h1>
+<h3>Dynamic</h3>
+<h4>All Properties and their values</h4>
+<ul>
+	<li 
+		ng-repeat="property in allOfTypeProperty" 
+		ng-hide="property.value===''"
+	>
+		{{property.name}} : {{property.value}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeProperty}}</p> -->
+<h4>All Collection and their links</h4>
+<ul>
+	<li ng-repeat="collection in allOfTypeCollection">
+		{{collection.name}} : {{collection.link}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeCollection}}</p> -->
+<h4>All Actions and their links</h4>
+<ul>
+	<li ng-repeat="action in allOfTypeAction">
+		{{action.name}} : {{action.link}}
+	</li>
+</ul>
+<!-- <p>{{allOfTypeAction}}</p> -->
+
