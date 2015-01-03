@@ -9,7 +9,14 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', function($scope) {
-	$scope.test = '123';
+.controller('View1Ctrl', ['$scope', 'RestCollectionFindService', function($scope, RestCollectionFindService) {
+	var url = 'http://xtalus.apps.gedge.nl/simple/restful/services/Persons/actions/findPersonsContains/invoke';
+	$scope.test = url;
+	var zoekobject = {"achternaam(wildcards*Toegestaan)":"o"};
+	RestCollectionFindService.restObject(url,zoekobject).then(
+		function(data){
+			$scope.test = data;
+		}
+	);
 	
 }]);

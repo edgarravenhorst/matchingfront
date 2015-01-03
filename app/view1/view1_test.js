@@ -5,6 +5,7 @@ describe('myApp.view1 module', function() {
   var scope, view1Ctrl;
   
   	beforeEach(module('myApp.view1'));
+  	beforeEach(module('matchingServices'));
 	beforeEach(inject(function ($controller, $rootScope) {  // inject $rootScope
     	scope = $rootScope.$new();
     	view1Ctrl = $controller('View1Ctrl',{$scope : scope});

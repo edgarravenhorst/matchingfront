@@ -364,6 +364,28 @@ matchingServices.factory('RestCollectionService', ['$http', '$q',
 		return {restObject: restObject};			
 }]);
 
+matchingServices.factory('RestCollectionFindService', ['$http', '$q',
+	function($http, $q){
+		var restObject = function(url, params){
+			var defer=$q.defer();
+			$http({
+				method: 'POST',
+				url: url,
+				cache: false,
+				params: params
+			})
+			.success(function(data) {
+				defer.resolve(data.result.value);
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			
+			return defer.promise;
+		}
+		return {restObject: restObject};			
+}]);
+
 matchingServices.factory('FormatRestObjectService', [
 	function(){
 	
