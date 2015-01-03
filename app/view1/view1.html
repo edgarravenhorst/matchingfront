@@ -1,2 +1,10 @@
-<h2>Zoek een persoon</h2>
-{{test}}
+<h2>Zoek een persoon op achternaam</h2>
+
+<input ng-model="searchstring" ng-click="searchAction()" placeholder="Type (gedeelte) achternaam; Hoofdlettergevoelig!" style="width: 400px;"></input>
+
+<h4 ng-show="showResults=='show'">Gevonden:</h4>
+<ul>
+	<li ng-repeat="result in results">
+		<a ng-href="#/person/{{result.href | urlcustomencode}}">{{result.title}}</a>
+	</li>
+</ul>
