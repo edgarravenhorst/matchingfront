@@ -9,7 +9,7 @@ angular.module('Home')
     'RestObjectService',
     'RestCollectionService',
     'FormatRestObjectService',
-    function ($scope, $templateCache, MatchingRestangularDefer, RestObjectService, RestCollectionService, FormatRestObjectService) {
+    function ($scope, $templateCache, MatchingRestangularDefer, RestObjectService, RestCollectionService, FormatRestObjectService) 	{
     
     	//Pogingen om caching te voorkomen, maar werkt niet goed
     	/*
@@ -46,8 +46,24 @@ angular.module('Home')
 								);
 							}
 						);
+						var _link_personalContacts=data.personalContacts.links[0].href;
+						RestCollectionService.restObject(_link_personalContacts).then(
+							function(data){
+								$scope.listOfPersonalContacts = data;
+								/*Again level deeper: iterate through contacts*/
+								var _tempForTest = [];
+								angular.forEach(data, function(value, key){
+									RestObjectService.restObject(value.href).then(
+										function(data){
+											_tempForTest.push(data);
+										}
+									);
+								});
+								$scope.allPersonalContactObjects = _tempForTest;
+							}
+						);
 					}
 				);
 			}
 		);
-    }]);
+    }]);	

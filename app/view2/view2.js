@@ -9,9 +9,20 @@ angular.module('myApp.view2', ['ngRoute'])
   });
 }])
 
-.controller('View2Ctrl', ['$scope', 'Flatten', 'MatchingAllServices', function($scope, Flatten, MatchingAllServices) {
-	$scope.test1 = '123';
-	$scope.test2 = '1234';
-	$scope.test3 = {test: 'test'};
+.controller('View2Ctrl', [
+	'$scope', 
+	'MatchingAllServices',
+	'MatchingRestangularDefer',
+	'RestCollectionService',
+	function($scope, MatchingAllServices, MatchingRestangularDefer, RestCollectionService) {
+	MatchingRestangularDefer.thisIsYou().then(
+		function(data){
+			RestCollectionService.restObject(data.href + '/collections/myDemands').then(
+				function(data){
+					$scope.listOfMyDemands = data;
+				}
+			);
+		}
+	);
 
 }]);

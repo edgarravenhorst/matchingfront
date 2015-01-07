@@ -35,6 +35,28 @@
 	</li>
 </ul>
 <!-- <p>{{allOfTypeAction}}</p> -->
+<h4>Level deeper: personalContacts collection and their links</h4>
+<h5>dynamic</h5>
+<!--
+<ul>
+	<li ng-repeat="contact in listOfPersonalContacts">
+		{{contact.title}} : {{contact.href}}
+		<a ng-href="#/person/{{contact.href | urlcustomencode}}">{{contact.title}}</a></li>
+	<li style="list-style-type: none;">
+	</li>
+</ul>
+-->
+<ul>
+	<li ng-repeat="contact in allPersonalContactObjects">
+		contactPerson:
+		<matching-personlink href="{{contact.contactPerson.value.href}}" link-text="{{contact.contactPerson.value.title}}"></matching-personlink> 
+		<!-- <a ng-href="#/person/{{contact.contactPerson.value.href | urlcustomencode}}">{{contact.contactPerson.value.title}}</a> -->
+		<br>
+		trustLevel: {{contact.trustLevel.value}}
+		<a ng-href="#/person/{{contact.href | urlcustomencode}}">{{contact.title}}</a></li>
+	<li style="list-style-type: none;">
+	</li>
+</ul>
 <h4>Level deeper: mySavedMatches collection and their links</h4>
 <h5>dynamic</h5>
 <ul>
@@ -60,6 +82,11 @@
 	</li>
 </ul>
 <h3>Tests</h3>
+<!--
+<p>{{listOfPersonalContacts}}</p>
+<p>{{allPersonalContactObjects}}</p>
+-->
+<matching-personlink href="http://etc.." link-text="link text"></matching-personlink>
 <p>{{test1}}</p>
 <p>{{test2}}</p>
 <p>{{test3}}</p>

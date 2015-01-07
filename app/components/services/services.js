@@ -438,4 +438,72 @@ matchingServices.factory('FormatRestObjectService', [
 		};
 }]);
 
+// Independent from RestAngular
+// NOTE: returns the URL right away
+matchingServices.factory('ThisIsYouUrl', [
+	'$http', 
+	'$q',
+	function($http, $q){
+		var defer=$q.defer();
+		var url = 'http://xtalus.apps.gedge.nl/simple/restful/services/Persons/actions/thisIsYou/invoke';
+		$http({
+			method: 'POST',
+			url: url,
+			cache: false
+			})
+			.success(function(data) {
+				defer.resolve(data.result.value[0].href);
+			})
+			.error(function(reason){
+				defer.reject(reason);
+			})
+			
+			return defer.promise;
+
+	}
+]);
+
+/* uitgebreidere service 
+specs: 
+	uitsplitsing lijsten met platte objecten van properties, collections en Actions
+	1 level dieper door collections
+*/ 
+matchingServices.factory('GetRestObject', [
+	'$http', 
+	'$q', 
+	'RestObjectService',
+	'RestCollectionService', 
+	'FormatRestObjectService',
+	function($http, $q, RestObjectService, RestCollectionService, FormatRestObjectService){
+		var defer=$q.defer();
+		var matchingRestObject = function(url){
+			RestObjectService.restObject(url).then(
+				function(data){
+					/*ga een level dieper voor collections*/
+					var _collectionDetails = [];
+					angular.forEach(FormatRestObjectService.allOfTypeCollection(data), function(value, key){
+						RestCollectionService.restObject(value.link).then(
+							function(data){
+								_collectionDetails.push({name: value.name, details: data});
+							}
+						);
+					});
+					defer.resolve(
+						{
+							allOfTypeProperty : FormatRestObjectService.allOfTypeProperty(data),
+							allOfTypeCollection : FormatRestObjectService.allOfTypeCollection(data),
+							allOfTypeAction : FormatRestObjectService.allOfTypeAction(data),
+							allOfTypeCollectionDetails : _collectionDetails
+						}
+					);
+				}
+			);
+			return defer.promise;	
+		};
+		return {restObject : matchingRestObject}	
+	}
+]);
+
+
+
 

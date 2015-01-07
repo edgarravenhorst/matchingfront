@@ -16,8 +16,11 @@ angular.module('myApp', [
   'ngCookies',
   'myApp.view1',
   'myApp.view2',
+  'myApp.view3',
+  'myApp.demand',
   'myApp.version',
-  'Filters'
+  'Filters',
+  'matchingDirectives'
 ])
 // Poging om chaching van partials (templates) te voorkomen; werkt niet volgens mij    
 .run(function($rootScope, $templateCache) {

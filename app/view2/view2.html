@@ -1,11 +1,10 @@
-<p>This is the partial for view 2.</p>
+<h2>Jouw demands (vraagstukken)</h2>
 
-<p>{{test1}}</p>
-<p>{{test2}}</p>
-<p>{{test3}}</p>
+<ul>
+	<li ng-repeat="demand in listOfMyDemands">
+		{{demand.title}} - {{demand.href}}
+		<matching-demandlink href="{{demand.href}}" link-text="{{demand.title}}"></matching-demandlink>
+	</li>
+</ul>
 
 
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>

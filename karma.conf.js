@@ -13,7 +13,8 @@ module.exports = function(config){
       'app/app.js',
       'app/components/**/*.js',
       'app/modules/**/*.js',
-      'app/view*/**/*.js'
+      'app/view*/**/*.js',
+      'app/demand/**/*.js'
     ],
 
     autoWatch : true,

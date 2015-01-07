@@ -1,0 +1,23 @@
+<h2>Tests</h2>
+
+
+<hr>
+<ul>
+	<li ng-repeat="details in test.allOfTypeCollectionDetails">
+		<h4>{{details.name}}</h4>
+<!-- 		{{details.details}} -->
+		<ul>
+			<li ng-repeat="detail in details.details">
+				{{detail.title}}, {{detail.href}}
+			</li>
+		</ul>
+	</li>
+</ul>
+<hr>
+<!--
+<h4>test:</h4> 
+{{test}}
+<hr>
+<h4>test1:</h4> 
+{{test1}}
+-->
