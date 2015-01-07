@@ -16,6 +16,7 @@ angular.module('Authentication')
             	method: 'get',
             	url: 'http://xtalus.apps.gedge.nl/simple/restful/user',
             	cache: false,
+            	rnd: Math.random(),   // prevent cache
             	headers: {'Authorization': 'Basic ' + Base64.encode(username + ':' + password) }
             	})
                 .success(function (data) {

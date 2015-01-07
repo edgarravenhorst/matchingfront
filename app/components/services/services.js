@@ -401,6 +401,16 @@ matchingServices.factory('FormatRestObjectService', [
 			return _allOfTypeProperty;
 		}
 		
+		var _allOfPropertyObject = function(restfulOject){
+			var _allOfTypePropertyObject = {};
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'property'){
+					_allOfTypePropertyObject[key] = value.value;
+				}						
+			});
+			return _allOfTypePropertyObject;
+		}
+		
 		var _allOfCollection = function(restfulOject){
 			var _allOfTypeCollection = [];
 			angular.forEach(restfulOject, function(value, key){
@@ -411,6 +421,16 @@ matchingServices.factory('FormatRestObjectService', [
 				}							
 			});
 			return _allOfTypeCollection;
+		}
+
+		var _allOfCollectionObject = function(restfulOject){
+			var _allOfTypeCollectionObject = {};
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'collection'){
+					_allOfTypeCollectionObject[key] = value.links[0].href;
+				}						
+			});
+			return _allOfTypeCollectionObject;
 		}
 		
 		var _allOfAction = function(restfulOject){
@@ -429,9 +449,15 @@ matchingServices.factory('FormatRestObjectService', [
 			allOfTypeProperty: function(restfulOject){
 					return _allOfProperty(restfulOject);
 				},
+			allOfTypePropertyObject: function(restfulOject){
+					return _allOfPropertyObject(restfulOject);
+				},	
 			allOfTypeCollection: function(restfulOject){
 					return _allOfCollection(restfulOject);
 				},
+			allOfTypeCollectionObject: function(restfulOject){
+					return _allOfCollectionObject(restfulOject);
+				},				
 			allOfTypeAction: function(restfulOject){
 					return _allOfAction(restfulOject);
 				}
@@ -466,34 +492,24 @@ matchingServices.factory('ThisIsYouUrl', [
 /* uitgebreidere service 
 specs: 
 	uitsplitsing lijsten met platte objecten van properties, collections en Actions
-	1 level dieper door collections
 */ 
 matchingServices.factory('GetRestObject', [
-	'$http', 
 	'$q', 
 	'RestObjectService',
 	'RestCollectionService', 
 	'FormatRestObjectService',
-	function($http, $q, RestObjectService, RestCollectionService, FormatRestObjectService){
+	function($q, RestObjectService, RestCollectionService, FormatRestObjectService){
 		var defer=$q.defer();
 		var matchingRestObject = function(url){
 			RestObjectService.restObject(url).then(
 				function(data){
-					/*ga een level dieper voor collections*/
-					var _collectionDetails = [];
-					angular.forEach(FormatRestObjectService.allOfTypeCollection(data), function(value, key){
-						RestCollectionService.restObject(value.link).then(
-							function(data){
-								_collectionDetails.push({name: value.name, details: data});
-							}
-						);
-					});
 					defer.resolve(
 						{
 							allOfTypeProperty : FormatRestObjectService.allOfTypeProperty(data),
+							allOfTypePropertyObject : FormatRestObjectService.allOfTypePropertyObject(data),
 							allOfTypeCollection : FormatRestObjectService.allOfTypeCollection(data),
-							allOfTypeAction : FormatRestObjectService.allOfTypeAction(data),
-							allOfTypeCollectionDetails : _collectionDetails
+							allOfTypeCollectionObject : FormatRestObjectService.allOfTypeCollectionObject(data),
+							allOfTypeAction : FormatRestObjectService.allOfTypeAction(data)
 						}
 					);
 				}
@@ -504,6 +520,33 @@ matchingServices.factory('GetRestObject', [
 	}
 ]);
 
+matchingServices.factory('GetRestCollection', [
+	'$q',
+	'RestCollectionService',
+	function($q, RestCollectionService){
+		var defer=$q.defer();
+		var matchingRestCollection = function(url){
+			RestCollectionService.restObject(url).then(
+				function(data){
+					var _tempObject = {};
+					var _tempList = [];
+					angular.forEach(data, function(value, key){
+						_tempObject[value.title]=value.href;
+						_tempList.push(value);
+					});
+					defer.resolve(
+						{
+							collectionObject : _tempObject,
+							collectionList : _tempList
+						}
+					);
+				}
+			);
+			return defer.promise;	
+		};
+		return {restObject : matchingRestCollection}			
+	}
+]);
 
 
 

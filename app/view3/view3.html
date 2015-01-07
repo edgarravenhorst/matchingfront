@@ -1,23 +1,28 @@
 <h2>Tests</h2>
 
-
-<hr>
+<h4>Statisch (met domein kennis - de eigenschappen van 'person' zijn bekend)</h4>
+<h3>Welkom {{firstName}} {{middleName}} {{lastName}}!</h3>
+Rollen: {{roles}}<br>
+Id: {{uniqueId}}
+<h4>Vraagstukken</h4>
+{{myDemands}}
+<h3>het mydemands object</h3>
+{{myDemandsObject}}
+<h3>het mydemands object via loop</h3>
+<!-- {{promises}} -->
 <ul>
-	<li ng-repeat="details in test.allOfTypeCollectionDetails">
-		<h4>{{details.name}}</h4>
-<!-- 		{{details.details}} -->
+		<li ng-repeat="demand in promises">
+<!-- 		{{demand}} -->
 		<ul>
-			<li ng-repeat="detail in details.details">
-				{{detail.title}}, {{detail.href}}
+			<li ng-repeat="dem_detail in demand">
+				{{dem_detail.title}}<br>
+				{{dem_detail.href}}
 			</li>
 		</ul>
 	</li>
 </ul>
 <hr>
-<!--
-<h4>test:</h4> 
-{{test}}
+{{temp2}}
 <hr>
-<h4>test1:</h4> 
-{{test1}}
--->
+<h3>Het person object:</h3>
+{{test}}
