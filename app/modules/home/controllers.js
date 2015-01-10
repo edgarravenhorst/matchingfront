@@ -4,66 +4,122 @@ angular.module('Home')
 
 .controller('HomeController',
     ['$scope',
-    '$templateCache',
-    'MatchingRestangularDefer',
-    'RestObjectService',
-    'RestCollectionService',
-    'FormatRestObjectService',
-    function ($scope, $templateCache, MatchingRestangularDefer, RestObjectService, RestCollectionService, FormatRestObjectService) 	{
+	'GetRestObject',
+	'RestObjectService',
+	'RestCollectionService',
+	'RestPostService',
+	'FormatRestObjectService',
+	'GetRestCollection', 
+	'ThisIsYouUrl',
+	'$q',
+	'$location',
+    function ($scope, GetRestObject, RestObjectService, RestCollectionService, RestPostService, FormatRestObjectService, GetRestCollection, ThisIsYouUrl, $q, $location) 	{
     
     	//Pogingen om caching te voorkomen, maar werkt niet goed
     	/*
 		$templateCache.remove('/modules/home/views/home.html');
     	$templateCache.removeAll();
 		*/
-    	
-		MatchingRestangularDefer.thisIsYou().then(
-			function(data){
-				$scope.thisIsYou = data;
-				RestObjectService.restObject(data.href).then(
-					function(data){
-						/*static*/
-						$scope.firstName = data.firstName.value;
-						$scope.middleName = data.middleName.value;
-						$scope.lastName = data.lastName.value;
-						$scope.roles = data.roles.value;
-						$scope.uniqueActorId = data.uniqueActorId.value;
-						/*dynamic*/
-						$scope.allOfTypeProperty = FormatRestObjectService.allOfTypeProperty(data);
-						$scope.allOfTypeCollection = FormatRestObjectService.allOfTypeCollection(data);
-						$scope.allOfTypeAction = FormatRestObjectService.allOfTypeAction(data);
-						/*level deeper to collection 'mySavedMatches'*/
-						var _link_mySavedMatches = data.mySavedMatches.links[0].href;
-						RestCollectionService.restObject(_link_mySavedMatches).then(
-							function(data){
-								$scope.listOfMySavedMatches = data;
-								/*Again level deeper: first saved match*/
-								var _link_object = data[0].href;
-								RestObjectService.restObject(_link_object).then(
-									function(data){
-										$scope.allOfSavedMatchTypeProperty = FormatRestObjectService.allOfTypeProperty(data);
-									}
-								);
-							}
-						);
-						var _link_personalContacts=data.personalContacts.links[0].href;
-						RestCollectionService.restObject(_link_personalContacts).then(
-							function(data){
-								$scope.listOfPersonalContacts = data;
-								/*Again level deeper: iterate through contacts*/
-								var _tempForTest = [];
-								angular.forEach(data, function(value, key){
-									RestObjectService.restObject(value.href).then(
-										function(data){
-											_tempForTest.push(data);
-										}
-									);
-								});
-								$scope.allPersonalContactObjects = _tempForTest;
-							}
-						);
+		var homeAllDataForRender = function(){
+			return(
+				ThisIsYouUrl.then(
+					function(YourUrl){
+						var _thisIsYouUrl = YourUrl;
+						return GetRestObject.restObject(_thisIsYouUrl);
 					}
-				);
-			}
-		);
+				).then(
+					function(persondata){
+						//for test: json object
+						$scope.test =  persondata;
+						//dynamic: json list of objects
+						$scope.allOfTypeProperty = persondata.allOfTypeProperty;
+						$scope.allOfTypeCollection = persondata.allOfTypeCollection;
+						$scope.allOfTypeAction = persondata.allOfTypeAction;
+						//static: json objects
+						$scope.firstName = persondata.allOfTypePropertyObject.firstName;
+						$scope.middleName = persondata.allOfTypePropertyObject.middleName;
+						$scope.lastName = persondata.allOfTypePropertyObject.lastName;
+						$scope.uniqueActorId = persondata.allOfTypePropertyObject.uniqueActorId;
+						$scope.roles = persondata.allOfTypePropertyObject.roles;
+						
+						$scope.deleteRoleStudent = persondata.allOfTypeActionObject.deleteRoleStudent;
+						$scope.addRoleStudent = persondata.allOfTypeActionObject.addRoleStudent;
+						$scope.deleteRoleProfessional = persondata.allOfTypeActionObject.deleteRoleProfessional;
+						$scope.addRoleProfessional = persondata.allOfTypeActionObject.addRoleProfessional;
+						$scope.deleteRolePrincipal = persondata.allOfTypeActionObject.deleteRolePrincipal;
+						$scope.addRolePrincipal = persondata.allOfTypeActionObject.addRolePrincipal;
+						$scope.newPersonsDemand = persondata.allOfTypeActionObject.newPersonsDemand;
+						
+						$scope.myDemands=persondata.allOfTypeCollectionObject.myDemands;
+						return GetRestCollection.restObject(persondata.allOfTypeCollectionObject.myDemands);
+					}
+				).then(
+					function(collectiondata){
+						$scope.myDemandsObject = collectiondata.collectionList;
+						var _promises = [];
+						angular.forEach(collectiondata.collectionList, function(value, key){
+		/* 					_promises.push(RestObjectService.restObject(value.href)); */
+							var _tempObj={};
+							RestCollectionService.restObject(value.href + '/collections/demandProfiles').then(
+								function(data){
+									_tempObj['title']=value.title;
+									_tempObj['href']=value.href;
+									_tempObj['data']=data;
+								}
+							);
+/* 							_promises.push(RestCollectionService.restObject(value.href + '/collections/demandProfiles')); //direct stap dieper */				
+							_promises.push(_tempObj);
+						});
+						return $q.all(_promises);
+					}
+				).then(
+					function(promises){
+						var _output = [];
+						angular.forEach(promises, function(value, key){
+		/* 					_output.push(FormatRestObjectService.allOfTypeCollectionObject(value)); */
+							_output.push(value);
+						});
+						$scope.demands = _output;
+					}
+				)	
+			);
+		}  
+		
+		// data for rendering
+		homeAllDataForRender();
+		
+		//navigation  	
+		$scope.goNext = function ( path ) {
+  			$location.path( path );
+		};
+		
+		//posting
+		$scope.postLink = function (url, param) {
+			RestPostService.restObject(url, param).then(
+				function(data){
+					location.reload();
+				}
+			);
+		};
+		
+		//input voor nieuwe opdracht
+		$scope.opdracht ={};
+		$scope.postOpdracht = function (url, param) {
+			RestPostService.restObject(url, param).then(
+				function(data){
+					location.reload();
+				}
+			);
+		};
+		
+		//post voor nieuw profiel	
+		$scope.postProfiel = function (url, param) {
+			RestPostService.restObject(url + '/actions/newPersonDemandProfile/invoke', param).then(
+				function(data){
+					location.reload();
+				}
+			);
+		}
+		
+		
     }]);	

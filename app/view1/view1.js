@@ -9,7 +9,7 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', 'RestCollectionFindService', function($scope, RestCollectionFindService) {
+.controller('View1Ctrl', ['$scope', 'RestPostService', function($scope, RestPostService) {
 /*
 	var allPersonsUrl = 'http://xtalus.apps.gedge.nl/simple/restful/services/Persons/actions/allPersons/invoke';
 	RestCollectionFindService.restObject(allPersonsUrl).then(
@@ -33,7 +33,7 @@ angular.module('myApp.view1', ['ngRoute'])
 		$scope.test1=$scope.searchstring;
 		var zoekobject ={};
 		zoekobject["achternaam(wildcards*Toegestaan)"] = $scope.searchstring;
-		RestCollectionFindService.restObject(url,zoekobject).then(
+		RestPostService.restObject(url,zoekobject).then(
 			function(data){
 				$scope.results = data;
 			}

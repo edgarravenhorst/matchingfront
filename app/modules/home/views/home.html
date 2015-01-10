@@ -1,23 +1,122 @@
 ﻿<h1>Home</h1>
-<p>Hi {{thisIsYou.title}}. You're logged in!!</p>
-<p><a href="#/login">Logout</a></a></p>
-<!--
-<p>{{firstName}}</p>
-<p>{{middleName}}</p>
-<p>{{lastName}}</p>-->
-<h3>Static</h3>
+<div class="row">
+	<div class="col-xs-4">Hi {{firstName}}. You're logged in.</div>	
+	<div class="col-xs-6">
+		<table class="table">
+			<tr>
+				<td>Naam:</td>
+				<td>{{firstName}} {{middleName}} {{lastName}}</td>
+			</tr>
+			<tr>
+				<td>Id:</td>
+				<td>{{uniqueActorId}}</td>
+			</tr>
+			<tr>
+				<td>Rollen:</td>
+				<td>{{roles}}</td>
+			</tr>							
+		</table>
+	</div>
+	<div class="col-xs-2">
+		<button class="btn btn-info" ng-click="goNext('/login')">Logout</button>
+		<!-- <a href="#/login">Logout</a> -->
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-4">
+		<button class="btn btn-info" 
+				ng-click="postLink(deleteRoleStudent, {})"
+				ng-hide="deleteRoleStudent == null"
+				>Geen student meer</button>
+
+		<button class="btn btn-info" 
+				ng-click="postLink(addRoleStudent, {})"
+				ng-hide="addRoleStudent == null"
+				>Maak student</button>
+	</div>
+		
+	<div class="col-xs-4">
+		<button class="btn btn-info" 
+				ng-click="postLink(deleteRoleProfessional, {})"
+				ng-hide="deleteRoleProfessional == null"
+				>Geen ZP meer</button>
+
+		<button class="btn btn-info" 
+				ng-click="postLink(addRoleProfessional, {})"
+				ng-hide="addRoleProfessional == null"
+				>Maak ZP-er</button>
+	</div>	
+
+	<div class="col-xs-4">
+		<button class="btn btn-info" 
+				ng-click="postLink(deleteRolePrincipal, {})"
+				ng-hide="deleteRolePrincipal == null"
+				>Geen opdrachtgever meer</button>
+
+		<button class="btn btn-info" 
+				ng-click="postLink(addRolePrincipal, {})"
+				ng-hide="addRolePrincipal == null"
+				>Maak opdrachtgever</button>
+	</div>	
+</div>
+<hr>
+<div class="row">
+	<div class="col-xs-12">
+		<h3>Mijn opdrachten</h3>
+	</div>
+</div>	
+<div class="row">	
+	<div class="col-xs-2">
+		-->
+	</div>
+	
+	<div class="col-xs-4">
+		<button class="btn-xs btn-info" 
+				ng-click="postOpdracht(newPersonsDemand, {'omschrijvingVanHetVraagstukOpTafel': omschrijving})"
+				ng-hide="newPersonsDemand == null"
+				ng-disabled="omschrijving == null"
+				>Maak een nieuwe opdracht</button>
+	</div>
+
+	<div class="col-xs-6">
+		<label>opdrachtomschrijving: </label>
+		<input ng-model="omschrijving"></input>
+	</div>	
+<!-- 	{{myDemandsObject}} -->
+	<table class="table">
+		<tr ng-repeat="demand in demands">
+			<td>
+				{{demand.title}}
+<!-- 				{{demands}} -->
+			</td>
+			<td>
+				<ul>
+					<li ng-repeat="details in demand.data">
+<!-- 						{{details}} -->
+						<a ng-href="{{details.href}}">{{details.title}}</a>
+					</li>
+				</ul>
+<!-- 				{{postProfiel}} -->
+				<button class="btn-xs btn-info" 
+						ng-click="postProfiel(demand.href, {omschrijvingPersoonGezocht : 'Nieuwe persoon ' + Date.now() })">Nieuw zoekprofiel</button>
+			</td>
+		</tr>
+	</table>
+<!-- 	{{opdracht}} -->
+</div>
+<hr>
+<h4>Static example (inspect code)</h4>
 <ul>
 	<li>roles: {{roles}}</li>
-	<li>uniqueActorId: {{uniqueActorId}}</li>
 </ul>
 <h3>Dynamic</h3>
 <h4>All Properties and their values</h4>
 <ul>
 	<li 
-		ng-repeat="property in allOfTypeProperty" 
-		ng-hide="property.value===''"
+		ng-repeat="property in allOfTypeProperty"
+		ng-hide="property.value === ''"
 	>
-		{{property.name}} : {{property.value}}
+		{{property.name}}: {{property.value}}
 	</li>
 </ul>
 <!-- <p>{{allOfTypeProperty}}</p> -->
@@ -86,7 +185,7 @@
 <p>{{listOfPersonalContacts}}</p>
 <p>{{allPersonalContactObjects}}</p>
 -->
-<matching-personlink href="http://etc.." link-text="link text"></matching-personlink>
-<p>{{test1}}</p>
+
+<p>{{test}}</p>
 <p>{{test2}}</p>
 <p>{{test3}}</p>

@@ -364,7 +364,7 @@ matchingServices.factory('RestCollectionService', ['$http', '$q',
 		return {restObject: restObject};			
 }]);
 
-matchingServices.factory('RestCollectionFindService', ['$http', '$q',
+matchingServices.factory('RestPostService', ['$http', '$q',
 	function($http, $q){
 		var restObject = function(url, params){
 			var defer=$q.defer();
@@ -375,7 +375,7 @@ matchingServices.factory('RestCollectionFindService', ['$http', '$q',
 				params: params
 			})
 			.success(function(data) {
-				defer.resolve(data.result.value);
+				defer.resolve(data.result);
 			})
 			.error(function(reason){
 				defer.reject(reason);
@@ -438,12 +438,22 @@ matchingServices.factory('FormatRestObjectService', [
 			angular.forEach(restfulOject, function(value, key){
 				if(value.memberType === 'action'){
 					var tmp = {};
-					tmp={name : key, link : value.links[0].href};
+					tmp={name : key, link : value.links[0].href + '/invoke'};
 					_allOfTypeAction.push(tmp);
 				}							
 			});
 			return _allOfTypeAction;
-		}				
+		}
+		
+		var _allOfActionObject = function(restfulOject){
+			var _allOfTypeActionObject = {};
+			angular.forEach(restfulOject, function(value, key){
+				if(value.memberType === 'action'){
+					_allOfTypeActionObject[key] = value.links[0].href + '/invoke';
+				}						
+			});
+			return _allOfTypeActionObject;
+		}						
 						
 		return {
 			allOfTypeProperty: function(restfulOject){
@@ -460,7 +470,10 @@ matchingServices.factory('FormatRestObjectService', [
 				},				
 			allOfTypeAction: function(restfulOject){
 					return _allOfAction(restfulOject);
-				}
+				},
+			allOfTypeActionObject: function(restfulOject){
+					return _allOfActionObject(restfulOject);
+				}	
 		};
 }]);
 
@@ -492,6 +505,7 @@ matchingServices.factory('ThisIsYouUrl', [
 /* uitgebreidere service 
 specs: 
 	uitsplitsing lijsten met platte objecten van properties, collections en Actions
+	returns zowel lists als objecten
 */ 
 matchingServices.factory('GetRestObject', [
 	'$q', 
@@ -509,7 +523,8 @@ matchingServices.factory('GetRestObject', [
 							allOfTypePropertyObject : FormatRestObjectService.allOfTypePropertyObject(data),
 							allOfTypeCollection : FormatRestObjectService.allOfTypeCollection(data),
 							allOfTypeCollectionObject : FormatRestObjectService.allOfTypeCollectionObject(data),
-							allOfTypeAction : FormatRestObjectService.allOfTypeAction(data)
+							allOfTypeAction : FormatRestObjectService.allOfTypeAction(data),
+							allOfTypeActionObject : FormatRestObjectService.allOfTypeActionObject(data)
 						}
 					);
 				}
