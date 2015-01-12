@@ -16,9 +16,8 @@ angular.module('myApp.profile', ['ngRoute'])
 	'FormatRestObjectService',
 	'RestCollectionService',
 	'GetRestObject',
-	'RestPostService',
 	'$rootScope',
-	function($scope, $routeParams, urlcustomdecode, RestObjectService, FormatRestObjectService, RestCollectionService, GetRestObject, RestPostService, $rootScope){
+	function($scope, $routeParams, urlcustomdecode, RestObjectService, FormatRestObjectService, RestCollectionService, GetRestObject, $rootScope){
 	
 		$scope.profileUrl = $routeParams.profileUrl;
 		

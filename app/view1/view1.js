@@ -31,11 +31,11 @@ angular.module('myApp.view1', ['ngRoute'])
 	
 	$scope.searchAction = function(){
 		$scope.test1=$scope.searchstring;
-		var zoekobject ={};
+		var zoekobject = {};
 		zoekobject["achternaam(wildcards*Toegestaan)"] = $scope.searchstring;
 		RestPostService.restObject(url,zoekobject).then(
 			function(data){
-				$scope.results = data;
+				$scope.results = data.value;
 			}
 		);
 	};
