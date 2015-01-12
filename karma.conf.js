@@ -14,7 +14,8 @@ module.exports = function(config){
       'app/components/**/*.js',
       'app/modules/**/*.js',
       'app/view*/**/*.js',
-      'app/demand/**/*.js'
+      'app/demand/**/*.js',
+      'app/profile/**/*.js'
     ],
 
     autoWatch : true,

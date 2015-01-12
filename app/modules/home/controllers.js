@@ -13,7 +13,8 @@ angular.module('Home')
 	'ThisIsYouUrl',
 	'$q',
 	'$location',
-    function ($scope, GetRestObject, RestObjectService, RestCollectionService, RestPostService, FormatRestObjectService, GetRestCollection, ThisIsYouUrl, $q, $location) 	{
+	'$rootScope',
+    function ($scope, GetRestObject, RestObjectService, RestCollectionService, RestPostService, FormatRestObjectService, GetRestCollection, ThisIsYouUrl, $q, $location, $rootScope) 	{
     
     	//Pogingen om caching te voorkomen, maar werkt niet goed
     	/*
@@ -112,14 +113,11 @@ angular.module('Home')
 			);
 		};
 		
-		//post voor nieuw profiel	
-		$scope.postProfiel = function (url, param) {
-			RestPostService.restObject(url + '/actions/newPersonDemandProfile/invoke', param).then(
-				function(data){
-					location.reload();
-				}
-			);
+		//post voor nieuw profiel
+		// matching_href is var op rootScope waarmee links worden doorgegeven	
+		$scope.newProfiel = function (demand_href) {
+			$rootScope.matching_href = demand_href;
+			$location.path( '/profile/new' );
 		}
-		
 		
     }]);	

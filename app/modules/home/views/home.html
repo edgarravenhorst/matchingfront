@@ -60,132 +60,53 @@
 	</div>	
 </div>
 <hr>
-<div class="row">
-	<div class="col-xs-12">
-		<h3>Mijn opdrachten</h3>
-	</div>
-</div>	
-<div class="row">	
-	<div class="col-xs-2">
-		-->
-	</div>
-	
-	<div class="col-xs-4">
-		<button class="btn-xs btn-info" 
-				ng-click="postOpdracht(newPersonsDemand, {'omschrijvingVanHetVraagstukOpTafel': omschrijving})"
-				ng-hide="newPersonsDemand == null"
-				ng-disabled="omschrijving == null"
-				>Maak een nieuwe opdracht</button>
-	</div>
 
-	<div class="col-xs-6">
-		<label>opdrachtomschrijving: </label>
-		<input ng-model="omschrijving"></input>
+
+<div id="opdrachten" ng-hide="deleteRolePrincipal == null">
+	<div class="row">
+		<div class="col-xs-12">
+			<h3>Mijn opdrachten</h3>
+		</div>
 	</div>	
-<!-- 	{{myDemandsObject}} -->
-	<table class="table">
-		<tr ng-repeat="demand in demands">
-			<td>
-				{{demand.title}}
-<!-- 				{{demands}} -->
-			</td>
-			<td>
-				<ul>
-					<li ng-repeat="details in demand.data">
-<!-- 						{{details}} -->
-						<a ng-href="{{details.href}}">{{details.title}}</a>
-					</li>
-				</ul>
-<!-- 				{{postProfiel}} -->
-				<button class="btn-xs btn-info" 
-						ng-click="postProfiel(demand.href, {omschrijvingPersoonGezocht : 'Nieuwe persoon ' + Date.now() })">Nieuw zoekprofiel</button>
-			</td>
-		</tr>
-	</table>
-<!-- 	{{opdracht}} -->
+	<div class="row">	
+		<div class="col-xs-2">
+			-->
+		</div>
+		
+		<div class="col-xs-4">
+			<button class="btn-xs btn-info" 
+					ng-click="postOpdracht(newPersonsDemand, {'omschrijvingVanHetVraagstukOpTafel': omschrijving})"
+					ng-hide="newPersonsDemand == null"
+					ng-disabled="omschrijving == null"
+					>Maak een nieuwe opdracht</button>
+		</div>
+	
+		<div class="col-xs-6">
+			<label>opdrachtomschrijving: </label>
+			<input ng-model="omschrijving" name="input_omschrijving"></input>
+		</div>	
+<!-- 		{{myDemandsObject}} -->
+		<table class="table">
+			<tr ng-repeat="demand in demands">
+				<td>
+					{{demand.title}}
+<!-- 					{{demands}} -->
+				</td>
+				<td>
+					<ul>
+						<li ng-repeat="details in demand.data">
+<!-- 							{{details}} -->
+	<!-- 						<a ng-href="{{details.href}}">{{details.title}}</a> -->
+							<matching-new-profile-button href="{{details.href}}" link-text="{{details.title}}"></matching-new-profile-button>
+						</li>
+					</ul>
+	<!-- 				{{postProfiel}} -->
+					<button class="btn-xs btn-info" 
+							ng-click="newProfiel(demand.href)">Nieuw zoekprofiel</button>
+				</td>
+			</tr>
+		</table>
+	<!-- 	{{opdracht}} -->
+	</div>
 </div>
-<hr>
-<h4>Static example (inspect code)</h4>
-<ul>
-	<li>roles: {{roles}}</li>
-</ul>
-<h3>Dynamic</h3>
-<h4>All Properties and their values</h4>
-<ul>
-	<li 
-		ng-repeat="property in allOfTypeProperty"
-		ng-hide="property.value === ''"
-	>
-		{{property.name}}: {{property.value}}
-	</li>
-</ul>
-<!-- <p>{{allOfTypeProperty}}</p> -->
-<h4>All Collection and their links</h4>
-<ul>
-	<li ng-repeat="collection in allOfTypeCollection">
-		{{collection.name}} : {{collection.link}}
-	</li>
-</ul>
-<!-- <p>{{allOfTypeCollection}}</p> -->
-<h4>All Actions and their links</h4>
-<ul>
-	<li ng-repeat="action in allOfTypeAction">
-		{{action.name}} : {{action.link}}
-	</li>
-</ul>
-<!-- <p>{{allOfTypeAction}}</p> -->
-<h4>Level deeper: personalContacts collection and their links</h4>
-<h5>dynamic</h5>
-<!--
-<ul>
-	<li ng-repeat="contact in listOfPersonalContacts">
-		{{contact.title}} : {{contact.href}}
-		<a ng-href="#/person/{{contact.href | urlcustomencode}}">{{contact.title}}</a></li>
-	<li style="list-style-type: none;">
-	</li>
-</ul>
--->
-<ul>
-	<li ng-repeat="contact in allPersonalContactObjects">
-		contactPerson:
-		<matching-personlink href="{{contact.contactPerson.value.href}}" link-text="{{contact.contactPerson.value.title}}"></matching-personlink> 
-		<!-- <a ng-href="#/person/{{contact.contactPerson.value.href | urlcustomencode}}">{{contact.contactPerson.value.title}}</a> -->
-		<br>
-		trustLevel: {{contact.trustLevel.value}}
-		<a ng-href="#/person/{{contact.href | urlcustomencode}}">{{contact.title}}</a></li>
-	<li style="list-style-type: none;">
-	</li>
-</ul>
-<h4>Level deeper: mySavedMatches collection and their links</h4>
-<h5>dynamic</h5>
-<ul>
-	<li ng-repeat="match in listOfMySavedMatches">
-		{{match.title}} : {{match.href}}
-	</li>
-</ul>
-<h4>Again deeper: first saved match and their values</h4>
-<ul>
-	<li style="list-style-type: none;">
-		<h5>static</h5>
-		<b>title: {{listOfMySavedMatches[0].title}}</b>
-	</li>
-	<li>supplyCandidate: <a ng-href="#/person/{{allOfSavedMatchTypeProperty[1].value.href | urlcustomencode}}">{{allOfSavedMatchTypeProperty[1].value.title}}</a></li>
-	<li style="list-style-type: none;">
-		<h5>dynamic</h5>
-	</li>
-	<li 
-		ng-repeat="property in allOfSavedMatchTypeProperty" 
-		ng-hide="property.value===''"
-	>
-		{{property.name}} : {{property.value}}
-	</li>
-</ul>
-<h3>Tests</h3>
-<!--
-<p>{{listOfPersonalContacts}}</p>
-<p>{{allPersonalContactObjects}}</p>
--->
 
-<p>{{test}}</p>
-<p>{{test2}}</p>
-<p>{{test3}}</p>

@@ -1,0 +1,97 @@
+<h2>"{{profileDescription}}"</h2>
+<!-- {{profileUrl}} -->
+<div id=new_profile ng-hide="matching_href == null || profileUrl != 'new'">
+<!--
+	{{matching_href}}
+	<hr>
+	{{test}}
+	{{test2}}
+	<hr>
+-->
+	<div class="row">
+		<div class="col-xs-6">
+			<label>Naam nieuw profiel </label>
+			<input ng-model="naam" name="input_naam"></input>
+		</div>
+		<div class="col-xs-4">
+			<button class="btn-xs btn-info" 
+					ng-click="postLink(test)"
+					ng-hide="matching_href == null"
+					ng-disabled="naam == null"
+					>Maak een nieuw profiel</button>
+		</div>
+
+	</div>
+</div>
+<div id=profile ng-if="profileUrl != 'new'">
+	<h3>Dynamic</h3>
+	<h4>All Properties and their values</h4>
+	<ul>
+		<li 
+			ng-repeat="property in allOfTypeProperty" 
+			ng-hide="property.value===''"
+		>
+			{{property.name}} : {{property.value}}
+		</li>
+	</ul>
+	<!-- <p>{{allOfTypeProperty}}</p> -->
+	<h4>Demand Profiles</h4>
+	<ul>
+		<li ng-repeat="profile in listOfDemandProfiles">
+			<b>{{profile.title}}</b><br>
+			details:
+	<!-- 		{{profile.details[0].profileElements}} -->
+			<ul>
+				<li ng-repeat="element in profile.details[0].profileElements">
+					<b>{{element.allOfTypeProperty[0].value}}</b><br>
+					Waarde: {{element.allOfTypeProperty[1].value}}<br>
+					Gewicht: {{element.allOfTypeProperty[2].value}}<br><br>
+					Bron:<br>
+					{{element.allOfTypeProperty}}
+					<br><br>
+					{{element.allOfTypeCollection}}<br><br>
+					{{element.allOfTypeAction}}<br>
+	
+	
+				</li>
+			</ul>
+			
+			<ul>
+				<li ng-repeat="detail in profile.details">
+					{{detail.allOfTypeProperty}}
+					<ul>
+						<li ng-repeat="property in detail.allOfTypeProperty">
+							{{property.name}} - {{property.value}}
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul>
+				<li ng-repeat="detail in profile.details">
+					{{detail.allOfTypeCollection}}
+					<ul>
+						<li ng-repeat="collection in detail.allOfTypeCollection">
+							{{collection.name}} - {{collection.link}}
+						</li>
+					</ul>
+				</li>
+			</ul>
+			{{profile}}
+		</li>
+	</ul>
+	<h4>All Collection and their links</h4>
+	<ul>
+		<li ng-repeat="collection in allOfTypeCollection">
+			{{collection.name}} : {{collection.link}}
+		</li>
+	</ul>
+	<!-- <p>{{allOfTypeCollection}}</p> -->
+	<h4>All Actions and their links</h4>
+	<ul>
+		<li ng-repeat="action in allOfTypeAction">
+			{{action.name}} : {{action.link}}
+		</li>
+	</ul>
+	<!-- <p>{{allOfTypeAction}}</p> -->
+	{{test1}}
+</div>

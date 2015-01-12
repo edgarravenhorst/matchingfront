@@ -18,6 +18,7 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.view3',
   'myApp.demand',
+  'myApp.profile',
   'myApp.version',
   'Filters',
   'matchingDirectives'
