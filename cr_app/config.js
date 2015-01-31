@@ -14,7 +14,7 @@ require.config({
 });
 
 require(['app', 'modules'],
-  function(editor, modules) {
+  function(app, modules) {
 
     modules.register();
 
