@@ -8,9 +8,9 @@ define
 
             this.register = function(){
 
-                var editor = require('editor')
+                var app = require('app')
                 var contentController = require('module/content/ContentController')
-                editor.controller( "contentController", ['$scope', '$compile', 'moduleService', contentController] )
+                app.controller( "contentController", ['$scope', '$compile', 'moduleService', contentController] )
 
 
             }
