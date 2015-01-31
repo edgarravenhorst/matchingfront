@@ -13,12 +13,12 @@ require.config({
   }
 });
 
-require(['editor', 'modules'],
+require(['app', 'modules'],
   function(editor, modules) {
 
     modules.register();
 
-    angular.bootstrap(document, ['CMS_Editor']);
+    angular.bootstrap(document, ['Xtalus_app']);
 
 
 
