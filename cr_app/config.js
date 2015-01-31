@@ -17,10 +17,7 @@ require(['app', 'modules'],
   function(app, modules) {
 
     modules.register();
-
     angular.bootstrap(document, ['Xtalus_app']);
-
-
 
   }
 );
