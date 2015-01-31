@@ -4,10 +4,9 @@ require 'breakpoint'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "wp-content/themes/walas/assets/css"
-sass_dir = "wp-content/themes/walas/assets/sass"
-images_dir = "wp-content/themes/walas/assets/images"
-javascripts_dir = "wp-content/themes/walas/assets/js"
+css_dir = "assets/css"
+sass_dir = "assets/sass"
+images_dir = "assets/images"
 
 # You can select your preferred output style here (can be overridden via the command line):
 output_style = :expanded
