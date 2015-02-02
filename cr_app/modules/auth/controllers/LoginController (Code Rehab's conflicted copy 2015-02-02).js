@@ -1,9 +1,11 @@
 define(function(require) {
 
     function LoginController($scope, $templateCache, $rootScope, $location, AuthenticationService){
-
         //controllerCode Angular
+
         AuthenticationService.ClearCredentials();
+
+        $scope.view = 'mod';
 
         $scope.login = function () {
             $scope.dataLoading = true;
@@ -18,8 +20,6 @@ define(function(require) {
             });
         };
     };
-
-    LoginController.$inject = ['$scope', '$templateCache', '$rootScope', '$location', 'AuthenticationService']
 
     return LoginController;
 

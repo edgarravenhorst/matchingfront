@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600);
 .color-1 {
-  color: #000;
+  color: #A21E5C;
 }
 
 .color-2 {
@@ -43,7 +43,7 @@ html, body {
   background-color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 13px;
-  color: #ccc;
+  color: #000;
   line-height: 140%;
   margin: 0;
   padding: 0;
@@ -55,7 +55,7 @@ html *, body * {
 
 a {
   text-decoration: none;
-  color: #ccc;
+  color: #000;
 }
 
 hr {
@@ -149,11 +149,11 @@ p a {
   text-decoration: underline;
 }
 p a:hover {
-  color: #000;
+  color: #A21E5C;
 }
 
 .partners_list a:hover, .widget_nav_menu a:hover {
-  color: #000;
+  color: #A21E5C;
   text-decoration: underline;
 }
 
@@ -178,7 +178,7 @@ p a:hover {
   text-decoration: none;
 }
 .button:hover {
-  background: #000;
+  background: #A21E5C;
   color: #fff;
 }
 .button:hover a {
@@ -202,5 +202,5 @@ html *, body * {
   color: #000;
 }
 html a, body a {
-  color: #000;
+  color: #A21E5C;
 }

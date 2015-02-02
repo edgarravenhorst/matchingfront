@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600);
 .color-1 {
-  color: #000;
+  color: #A21E5C;
 }
 
 .color-2 {
@@ -43,7 +43,7 @@ html, body {
   background-color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 13px;
-  color: #ccc;
+  color: #000;
   line-height: 140%;
   margin: 0;
   padding: 0;
@@ -55,7 +55,7 @@ html *, body * {
 
 a {
   text-decoration: none;
-  color: #ccc;
+  color: #000;
 }
 
 hr {
@@ -149,11 +149,11 @@ p a {
   text-decoration: underline;
 }
 p a:hover {
-  color: #000;
+  color: #A21E5C;
 }
 
 .partners_list a:hover, .widget_nav_menu a:hover {
-  color: #000;
+  color: #A21E5C;
   text-decoration: underline;
 }
 
@@ -178,7 +178,7 @@ p a:hover {
   text-decoration: none;
 }
 .button:hover {
-  background: #000;
+  background: #A21E5C;
   color: #fff;
 }
 .button:hover a {
@@ -190,13 +190,46 @@ p a:hover {
   box-sizing: border-box;
 }
 
+form {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+form:after {
+  content: ' ';
+  display: block;
+  clear: both;
+}
+
+input, button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin: 5px 0px;
+}
+
+button {
+  width: auto;
+  background-color: #222;
+  color: #fff;
+  float: right;
+  padding: 10px 20px;
+}
+button:hover {
+  background-color: #fff;
+  color: #222;
+}
+
 nav {
   margin: 0;
   padding: 0;
   width: 100%;
   display: table;
   height: auto;
-  background-color: #f5f5f5;
+  background-color: #A21E5C;
+  color: #fff;
 }
 nav ul {
   margin: 0;
@@ -210,7 +243,18 @@ nav ul li {
 nav ul li a {
   display: block;
   margin: 0;
-  color: #999;
+  color: #fff;
   padding: 10px 20px;
-  border-right: 1px dashed #999;
+  border-right: 1px dashed #fff;
+}
+
+#loginform {
+  margin: 50px auto;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  width: 350px;
+  padding: 25px;
+}
+#loginform .help-block {
+  color: #ff0000;
 }
