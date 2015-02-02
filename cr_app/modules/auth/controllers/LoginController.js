@@ -5,6 +5,8 @@ define(function(require) {
 
         AuthenticationService.ClearCredentials();
 
+        $scope.view = 'mod';
+
         $scope.login = function () {
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {

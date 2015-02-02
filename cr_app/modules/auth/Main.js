@@ -18,7 +18,6 @@ define
 
                 module.factory('AuthenticationService', ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', AuthService]);
                 module.factory('Base64', Base64Service);
-
                 module.controller( "LoginController", ['$scope', '$templateCache', '$rootScope', '$location', 'AuthenticationService', LoginController ])
 
                 return module

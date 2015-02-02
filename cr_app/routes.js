@@ -11,11 +11,11 @@ define(function(require){
             hideMenus: true
         })
         .when('/home', {
-            controller: 'HomeController',
+            //controller: 'HomeController',
             templateUrl: 'views/pages/homepage.htm?cachebuster=' + cacheBuster
         })
         .when('/info', {
-            controller: 'HomeController',
+            //controller: 'HomeController',
             templateUrl: 'views/pages/info.htm?cachebuster=' + cacheBuster
         })
         .when('/person/:personUrl', {
@@ -23,7 +23,27 @@ define(function(require){
             templateUrl: 'modules/person/views/person.html'
         })
         .otherwise({redirectTo: '/home'});
-    }]);
+    }])
+
+    .run(['$rootScope', '$location', '$cookieStore', '$http',
+    function ($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookieStore.get('globals') || {};
+        console.log($rootScope.globals);
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }
+
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }else if ($location.path() == '/login' && $rootScope.globals.currentUser ){
+                $location.path('/home');
+            }
+        });
+    }])
+    ;
 
     return routeModule;
 });
