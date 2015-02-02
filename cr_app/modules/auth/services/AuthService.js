@@ -49,8 +49,6 @@ define(function(require) {
         return service;
     };
 
-    AuthService.$inject = ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout'];
-
     return AuthService;
 
 });

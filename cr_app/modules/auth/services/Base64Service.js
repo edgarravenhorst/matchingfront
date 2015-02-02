@@ -1,6 +1,6 @@
 define(function(require) {
 
-    function Base64Service(Base64, $http, $cookieStore, $rootScope, $timeout){
+    function Base64Service( $http, $cookieStore, $rootScope, $timeout){
         var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
         return {
@@ -80,8 +80,6 @@ define(function(require) {
                 return output;
             }
         }};
-
-    Base64Service.$inject = ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout'];
 
     return Base64Service;
 

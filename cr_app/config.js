@@ -13,11 +13,21 @@ require.config({
   }
 });
 
-require(['app', 'modules'],
-  function(app, modules) {
+require(['routes', 'modules'],
+  function(routes, modules) {
+
+    var dependencies = [
+        //add modules
+        'ngRoute',
+        'ngCookies',
+        routes.name
+    ]
 
     modules.register();
-    angular.bootstrap(document, ['Xtalus_app']);
+    sharedModules = dependencies.concat(modules.list)
+
+    var application = angular.module('Xtalus', sharedModules);
+    angular.bootstrap(document, ['Xtalus']);
 
   }
 );

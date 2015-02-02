@@ -1,13 +1,13 @@
 define(function(require){
-    var app = angular.module('Xtalus_app', [
-        'ngRoute',
-    ]).config(['$routeProvider', function($routeProvider) {
+
+
+    var routeModule = angular.module('RoutesModule', []).config(
+        ['$routeProvider', function($routeProvider) {
         //poging om caching te voorkomen, maar werkt niet...
         var cacheBuster = Date.now().toString();
         $routeProvider
         .when('/login', {
-            controller: 'LoginController',
-            templateUrl: 'modules/auth/views/login-form.htm?cachebuster=' + cacheBuster,
+            templateUrl: 'views/pages/login.htm',
             hideMenus: true
         })
         .when('/home', {
@@ -25,5 +25,5 @@ define(function(require){
         .otherwise({redirectTo: '/home'});
     }]);
 
-    return app;
+    return routeModule;
 });

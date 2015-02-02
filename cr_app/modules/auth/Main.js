@@ -10,15 +10,18 @@ define
 
             this.register = function(){
 
-                var app = require('app')
-                var AuthController = require('modules/auth/controllers/LoginController')
+                var module = angular.module('Authentication', []);
+
+                var LoginController = require('modules/auth/controllers/LoginController')
                 var AuthService = require('modules/auth/services/AuthService')
                 var Base64Service = require('modules/auth/services/Base64Service')
 
-                app.factory('AuthenticationService', AuthService);
-                app.factory('Base64', Base64Service);
+                module.factory('AuthenticationService', ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout', AuthService]);
+                module.factory('Base64', Base64Service);
 
-                app.controller( "LoginController", ['$scope', AuthController] )
+                module.controller( "LoginController", ['$scope', '$templateCache', '$rootScope', '$location', 'AuthenticationService', LoginController ])
+
+                return module
             }
         }
 
