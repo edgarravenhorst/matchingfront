@@ -25,6 +25,7 @@ define(function(require){
         .otherwise({redirectTo: '/home'});
     }])
 
+    //Check If user logged in and redirect
     .run(['$rootScope', '$location', '$cookieStore', '$http',
     function ($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
