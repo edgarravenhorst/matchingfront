@@ -1,10 +1,6 @@
 define(function(require){
-
     var app = angular.module('Xtalus_app', [
-
         'ngRoute',
-
-
     ]).config(['$routeProvider', function($routeProvider) {
         //poging om caching te voorkomen, maar werkt niet...
         var cacheBuster = Date.now().toString();
@@ -17,6 +13,10 @@ define(function(require){
         .when('/home', {
             controller: 'HomeController',
             templateUrl: 'views/pages/homepage.htm?cachebuster=' + cacheBuster
+        })
+        .when('/info', {
+            controller: 'HomeController',
+            templateUrl: 'views/pages/info.htm?cachebuster=' + cacheBuster
         })
         .when('/person/:personUrl', {
             controller: 'PersonController',
