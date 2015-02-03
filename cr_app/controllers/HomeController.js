@@ -2,7 +2,10 @@ define(function(require) {
 
     function HomeController($scope, RestService){
 
-        console.log(RestService.getService(['Persons']));
+        var persons = RestService.getServices(['Persons'])
+
+        console.log(persons);
+
 
     };
 
