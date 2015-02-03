@@ -9,20 +9,20 @@ define(function(require) {
              ----------------------------------------------*/
             var response = {};
             $http({
-            	method: 'get',
-            	url: 'http://xtalus.apps.gedge.nl/simple/restful/user',
-            	cache: false,
-            	rnd: Math.random(),   // prevent cache
-            	headers: {'Authorization': 'Basic ' + Base64.encode(username + ':' + password) }
-            	})
-                .success(function (data) {
-                	response = { success: username === data.userName };
-                    callback(response);
-                })
-                .error(function(){
-                	response.message = 'Gebruikersnaam of wachtwoord is niet juist';
-                	callback(response);
-                });
+                method: 'get',
+                url: 'http://xtalus.apps.gedge.nl/simple/restful/user',
+                cache: false,
+                rnd: Math.random(),   // prevent cache
+                headers: {'Authorization': 'Basic ' + Base64.encode(username + ':' + password) }
+            })
+            .success(function (data) {
+                response = { success: username === data.userName };
+                callback(response);
+            })
+            .error(function(){
+                response.message = 'Gebruikersnaam of wachtwoord is niet juist';
+                callback(response);
+            });
 
         };
 

@@ -11,11 +11,11 @@ define(function(require){
             hideMenus: true
         })
         .when('/home', {
-            //controller: 'HomeController',
+            controller: 'HomeController',
             templateUrl: 'views/pages/homepage.htm?cachebuster=' + cacheBuster
         })
         .when('/info', {
-            //controller: 'HomeController',
+            //controller: 'AppelController',
             templateUrl: 'views/pages/info.htm?cachebuster=' + cacheBuster
         })
         .when('/person/:personUrl', {
