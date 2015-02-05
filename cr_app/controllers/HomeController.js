@@ -24,10 +24,20 @@ define(function(require) {
                 console.log('----------------------------------------------------------------------');
 
 
-                profile.myDemands.get().then(function(demands){
+                profile.myDemands.get().then(function(collection){
                     console.log('--------------------');
                     console.log('>> profile demands: ');
-                    console.log(demands);
+                    console.log(collection.values);
+                    $scope.demands = collection.values;
+                    console.log('----------------------------------------------------------------------');
+                });
+
+
+                 profile.mySupplies.get().then(function(collection){
+                    console.log('--------------------');
+                    console.log('>> profile supplies: ');
+                    console.log(collection.values);
+                    $scope.supplies = collection.values;
                     console.log('----------------------------------------------------------------------');
                 });
 
