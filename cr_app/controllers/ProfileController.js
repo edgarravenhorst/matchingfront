@@ -25,11 +25,7 @@ define(function(require) {
                                 $scope.profile.picture = picture;
                             }
 
-                            // tussen oplossing om bugs te voorkomen, nog fixxe
-                            if($scope.profile.middleName.get()){
-                                $scope.profile.middleName = "";
 
-                            }
 
                             console.log($scope.profile);
 

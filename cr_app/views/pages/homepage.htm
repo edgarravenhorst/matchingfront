@@ -15,6 +15,38 @@
     </ul>
 </section>
 
+
+
+<section id="PersonalDemands" ng-controller="DemandsController">
+     <h2>Vragen</h2>
+    <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type trefwoord"/>
+    <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
+    <hr/>
+    <ul >
+        <li ng-show="result" ng-repeat="result in results">
+            <a href="#/profile/{{result.title}}">
+                <h2>{{ result.value }}</h2>
+            </a>
+        </li>
+    </ul>
+</section>
+
+<!--<section id="PersonalSupplies" ng-controller="SuppliesController">
+     <h2>Aanbod</h2>
+    <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type trefwoord"/>
+    <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
+    <hr/>
+    <ul ng-show="searchQuery">
+        <li ng-show="result"ng-repeat="result in results">
+            <a href="#/profile/{{result.title}}">
+                <h2>{{ result.value }}</h2>
+            </a>
+        </li>
+    </ul>
+</section>-->
+
+
+
 <!--
 <h4>Alle Tags</h4>
 

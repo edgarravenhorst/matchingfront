@@ -18,9 +18,10 @@ require(
      'services/RestService',
      'controllers/HomeController',
      'controllers/ProfileController',
-     'controllers/PersonController'
+     'controllers/PersonController',
+     'controllers/DemandsController'
     ],
-    function(routes, modules, RestService, HomeController, ProfileController,PersonController) {
+    function(routes, modules, RestService, HomeController, ProfileController,PersonController,DemandsController) {
 
         var dependencies = [
             'ngRoute',
@@ -37,6 +38,7 @@ require(
         application.controller('HomeController', HomeController)
         application.controller('ProfileController', ProfileController)
         application.controller('PersonController', PersonController)
+        application.controller('DemandsController', DemandsController)
         angular.bootstrap(document, ['Xtalus']);
 
     }
