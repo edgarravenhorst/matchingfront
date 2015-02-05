@@ -4,9 +4,9 @@ require 'breakpoint'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "assets/css"
-sass_dir = "assets/sass"
-images_dir = "assets/images"
+css_dir = "cr_app/assets/css"
+sass_dir = "cr_app/assets/sass"
+images_dir = "cr_app/assets/images"
 
 # You can select your preferred output style here (can be overridden via the command line):
 output_style = :expanded

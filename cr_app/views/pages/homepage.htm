@@ -1,11 +1,22 @@
-<h2>Zoeken naar {{ searchQuery }}</h2>
+<section id="searchProfiles" ng-controller="ProfileController">
+    <h2>Zoeken in personen</h2>
+    <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type achternaam"/>
+    <span ng-show="searchQuery">Zoeken naar: {{ searchQuery }}</span>
+    <ul ng-show="searchQuery">
+        <li ng-repeat="result in results">
+            <img width="75" height="75" src="data:image/png;base64,{{result.picture}}"/>
+            {{ result.value }}
+        </li>
+    </ul>
+</section>
 
-<ul>
-    <li ng-repeat="result in results"> {{ result.value }} </li>
-</ul>
 
+
+
+<!--
 <h4>Alle Tags</h4>
 
 <ul>
     <li ng-repeat="tag in tags"> {{ tag.data.title }} </li>
 </ul>
+-->
