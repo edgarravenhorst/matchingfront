@@ -259,3 +259,8 @@ nav ul li a {
 #loginform .help-block {
   color: #ff0000;
 }
+
+#searchProfiles {
+  width: 50%;
+  margin: 0 auto;
+}
