@@ -15,13 +15,28 @@ define(function(require) {
 
                     persons.findPersons.post({lastName:$routeParams.lastName}).then(function(person){
                         if(person[0]){
-                            var data = person[0].data.members
-                            $scope.profile = data;
+
+                            $scope.profile = RestService.initRestObject(person[0].data);
+
+                            if($scope.profile.picture){
+                                picture = $scope.profile.picture;
+                                picture = picture.split(':');
+                                picture = picture[2];
+                                $scope.profile.picture = picture;
+                            }
+
+                            // tussen oplossing om bugs te voorkomen, nog fixxe
+                            if($scope.profile.middleName.get()){
+                                $scope.profile.middleName = "";
+
+                            }
+
+                            console.log($scope.profile);
 
                         }
 
                         else{
-                            $scope.results = []
+                            //$scope.results = []
                         }
 
                     });

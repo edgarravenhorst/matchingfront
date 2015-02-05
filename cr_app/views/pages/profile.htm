@@ -1,6 +1,7 @@
-<section>
-    <h2>Profiel {{profile.firstName.value}} {{profile.middleName.value}} {{profile.lastName.value}}</h2>
+<section ng-show="profile">
+    <h2>Profiel {{profile.firstName}} {{profile.middleName}} {{profile.lastName}}</h2>
     <section>
-        Geboortedatum: {{profile.birthDay.value}}
+          <img class='profile' width="75" height="75" ng-src="data:image/png;base64,{{profile.picture}}"/>
+        Geboortedatum: {{profile.dateOfBirth}}
     </section>
 </section>
