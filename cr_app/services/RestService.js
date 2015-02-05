@@ -29,7 +29,7 @@ define(function(require) {
         }
 
         this.initMember = function(memberdata){
-
+            var initMember = this.initMember;
             var Member = function(){
                 this.id = 0;
                 this.rawdata = memberdata;
@@ -72,15 +72,20 @@ define(function(require) {
 
                             var promises = {}
 
-                            console.log(obj);
+                            //console.log(initMember(obj.data));
 
                             /*angular.forEach(obj.data.result.value, function(value, i){
                                 promises[i] = $http.get(value.href)
                             }.bind(this))*/
 
-                            return $q.all(promises);
 
-                        }, function(errordata){
+                            member = initMember(obj.data);
+                            console.log(member);
+                            member.appel = obj.data;
+
+                            return initMember(obj.data);
+
+                        }.bind(this), function(errordata){
                             return errordata
                         })
 
