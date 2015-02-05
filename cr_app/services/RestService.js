@@ -1,6 +1,8 @@
 define(function(require) {
 
     function RestService( $http, $q ){
+        this.$inject =  ['$http', '$q']
+
         this.baseURL = 'http://xtalus.apps.gedge.nl/simple/restful/';
         this.servicesURL = this.baseURL + 'services/'
 
@@ -48,9 +50,7 @@ define(function(require) {
                                 promises[i] = $http.get(value.href)
                             }.bind(this))
 
-                            return $q.all(promises).then(function(result){
-                                return result;
-                            });
+                            return $q.all(promises);
 
                         }, function(errordata){
                             return errordata
