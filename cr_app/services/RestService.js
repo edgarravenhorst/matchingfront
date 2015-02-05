@@ -29,10 +29,10 @@ define(function(require) {
         }
 
         this.initMember = function(memberdata){
-            //console.log(memberdata);
+
             var Member = function(){
                 this.id = 0;
-
+                this.rawdata = memberdata;
                 this.post = function (params){
                     return $http.get(memberdata.links[0].href).then(function(result){
 
@@ -58,17 +58,48 @@ define(function(require) {
 
                     });
                 }
+
+                this.get = function(params){
+                    return $http.get(memberdata.links[0].href).then(function(result){
+
+                        //if(result.data.links[2].method)
+                        return $http({
+                            method: 'GET',
+                            url: result.data.links[0].href,
+                            cache: false,
+                            params: params
+                        }).then(function(obj){
+
+                            var promises = {}
+
+                            console.log(obj);
+
+                            /*angular.forEach(obj.data.result.value, function(value, i){
+                                promises[i] = $http.get(value.href)
+                            }.bind(this))*/
+
+                            return $q.all(promises);
+
+                        }, function(errordata){
+                            return errordata
+                        })
+
+                    });
+                }
             }
 
+            if (memberdata.value) return memberdata.value
             return new Member();
         }
 
-        this.initRestObject = function(obj){
-            var srcObj = obj.src;
+        this.initRestObject = function(restObj){
+            var obj = {}
             var promises = {};
-            obj.id = srcObj.serviceId;
 
-            angular.forEach(srcObj.members, function(member, name) {
+            obj.restObj = restObj
+            //restObj.id = srcObj.serviceId;
+
+            angular.forEach(restObj.members, function(member, name) {
                 obj[name] = this.initMember(member);
             }.bind(this))
 
@@ -83,9 +114,7 @@ define(function(require) {
 
                 angular.forEach(result, function(obj){
 
-                    services[obj.data.serviceId] = {
-                        src:obj.data
-                    }
+                    services[obj.data.serviceId] = obj.data
 
                 })
 
