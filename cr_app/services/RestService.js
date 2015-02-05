@@ -73,13 +73,6 @@ define(function(require) {
 
                             var promises = {}
 
-                            //console.log(initMember(obj.data));
-
-                            /*angular.forEach(obj.data.result.value, function(value, i){
-                                promises[i] = $http.get(value.href)
-                            }.bind(this))*/
-
-
                             member = initMember(obj.data);
                             return initMember(obj.data);
 
