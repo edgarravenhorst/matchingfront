@@ -1,11 +1,16 @@
 <section id="searchProfiles" ng-controller="ProfileController">
     <h2>Zoeken in personen</h2>
     <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type achternaam"/>
-    <span ng-show="searchQuery">Zoeken naar: {{ searchQuery }}</span>
+    <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
+    <hr/>
     <ul ng-show="searchQuery">
         <li ng-show="result"ng-repeat="result in results">
-            <img width="75" height="75" ng-show="result" src="data:image/png;base64,{{result.picture}}"/>
-            {{ result.value }}
+            <a href="#/profile/{{result.lastName}}">
+                <img class='profile' width="75" height="75" ng-show="result" ng-src="data:image/png;base64,{{result.picture}}"/>
+                <h2>{{ result.value }}</h2>
+            </a>
+            <img ng-click="addToNetwork(result.value)" class="add" src="http://icdn.pro/images/en/a/d/add-more-icone-8593-48.png" width="25" height="25" />
+
         </li>
     </ul>
 </section>

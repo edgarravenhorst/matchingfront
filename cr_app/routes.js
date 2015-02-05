@@ -22,6 +22,10 @@ define(function(require){
             controller: 'PersonController',
             templateUrl: 'modules/person/views/person.html'
         })
+        .when('/profile/:lastName', {
+            controller: 'ProfileController',
+            templateUrl: 'views/pages/profile.htm'
+        })
         .otherwise({redirectTo: '/home'});
     }])
 

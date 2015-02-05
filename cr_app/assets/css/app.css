@@ -264,3 +264,30 @@ nav ul li a {
   width: 50%;
   margin: 0 auto;
 }
+#searchProfiles ul {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  list-style: none;
+}
+#searchProfiles ul li {
+  display: block;
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+  margin: 0;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px dashed #666;
+}
+#searchProfiles ul li img.add {
+  float: right;
+  margin-top: 36px;
+  cursor: pointer;
+}
+#searchProfiles ul li img.profile, #searchProfiles ul li h2 {
+  float: left;
+}
+#searchProfiles ul li img.profile {
+  margin: 9px 20px 0 0;
+}
