@@ -4,75 +4,98 @@ define(function(require) {
         this.baseURL = 'http://xtalus.apps.gedge.nl/simple/restful/';
         this.servicesURL = this.baseURL + 'services/'
 
-
         this.getServices = function(selectedServices){
             calls = [];
+
             angular.forEach(selectedServices, function(serviceName) {
                 calls.push($http.get(this.servicesURL + serviceName))
             }.bind(this))
 
-            this.getRestData(calls).then(function(result){
-                console.log(result)
-            })
+            return this.getRestData(calls)
+            .then(function(result) {
+
+                var promises = {}
+
+                angular.forEach(result, function(obj, i){
+                    promises[i] = (this.initRestObject(obj))
+                }.bind(this))
+
+                return $q.all(promises).then(function(result){
+                    return result;
+                });
+            }.bind(this))
         }
 
+        this.initMember = function(memberdata){
+            //console.log(memberdata);
+            var Member = function(){
+                this.id = 0;
 
+                this.post = function (params){
+                    return $http.get(memberdata.links[0].href).then(function(result){
 
+                        //if(result.data.links[2].method)
+                        return $http({
+                            method: 'POST',
+                            url: result.data.links[2].href,
+                            cache: false,
+                            params: params
+                        }).then(function(obj){
 
-        this.getRestLinks = function(links){
-            calls = [];
+                             var promises = {}
 
-            angular.forEach(links, function(link) {
-                if (link.rel != 'self' && link.rel != 'up' && link.method == 'GET' )
-                    calls.push($http.get(link.href))
-                if (link.method == 'POST' )
-                    calls.push($http.post(link.href))
+                            angular.forEach(obj.data.result.value, function(value, i){
+                                promises[i] = $http.get(value.href)
+                            }.bind(this))
+
+                            return $q.all(promises).then(function(result){
+                                return result;
+                            });
+
+                        }, function(errordata){
+                            return errordata
+                        })
+
+                    });
+                }
+            }
+
+            return new Member();
+        }
+
+        this.initRestObject = function(obj){
+            var srcObj = obj.src;
+            var promises = {};
+            obj.id = srcObj.serviceId;
+
+            angular.forEach(srcObj.members, function(member, name) {
+                obj[name] = this.initMember(member);
             }.bind(this))
 
-            if (calls.length == 0) return;
-            this.getRestData(calls).then(function(result){
-                console.log(result)
-            })
+            return obj;
         }
 
-        this.getRestMembers = function(members){
-            calls = [];
-
-            angular.forEach(members, function(member) {
-                angular.forEach(member.links, function(link) {
-                if (link.rel != 'self' && link.rel != 'up' && link.method == 'GET' )
-                    calls.push($http.get(link.href))
-                if (link.method == 'POST' )
-                    calls.push($http.post(link.href))
-            })
-            })
-            if (calls.length == 0) return;
-            this.getRestData(calls).then(function(result){
-                console.log(result)
-            })
-        }
-
-        this.getRestData = function (calls){
+        this.getRestData = function(calls){
             return $q.all(calls).then(function(result){
-                var tmp = [];
-                angular.forEach(result, function(response) {
-                    if (response.data.serviceId)
-                        tmp[response.data.serviceId] = response.data;
-                    if (response.data.id)
-                        tmp[response.data.id] = response.data;
-                    this.getRestLinks(response.data.links);
-                    this.getRestMembers(response.data.members);
-                }.bind(this))
-                return tmp;
-            }.bind(this), function(error){
-                console.log('Error status ' + error.status + ' : ' + error.statusText + ' >> ' + error.data['x-ro-invalidReason'] + '\n')
-                console.log(error);
-            }).then(function(tmpresult) {
-                return tmpresult;
+
+                var promises = [];
+                var services = {}
+
+                angular.forEach(result, function(obj){
+
+                    services[obj.data.serviceId] = {
+                        src:obj.data
+                    }
+
+                })
+
+                return services;
+
+            }, function(error){
+                console.log('error: ')
+                console.log(error)
             })
         }
     };
-
     return RestService;
-
 });

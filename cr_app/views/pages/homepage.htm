@@ -1,1 +1,11 @@
-hallooo
+<h2>Zoeken naar {{ searchQuery }}</h2>
+
+<ul>
+    <li ng-repeat="result in results"> {{ result.value }} </li>
+</ul>
+
+<h4>Alle Tags</h4>
+
+<ul>
+    <li ng-repeat="tag in tags"> {{ tag.data.title }} </li>
+</ul>
