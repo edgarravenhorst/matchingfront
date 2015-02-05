@@ -11,9 +11,7 @@ define(function(require) {
         }
 
         // SEARCH FUNCTION
-        $scope.search = function(){
 
-            if($scope.searchQuery){
 
                 RestService.getServices(['Demands'])
                 .then(function(data){
@@ -41,11 +39,6 @@ define(function(require) {
 
             }
 
-
-        }
-
-
-    };
 
     return DemandsController;
 
