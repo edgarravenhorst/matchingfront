@@ -92,8 +92,8 @@ define(function(require) {
                     });
                 }
             }
-
-            if (memberdata.value) return memberdata.value
+            console.log(memberdata)
+            if (memberdata.memberType == 'property') return memberdata.value
             return new Member();
         }
 
