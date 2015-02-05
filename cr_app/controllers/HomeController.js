@@ -5,14 +5,12 @@ define(function(require) {
 
         RestService.getServices(['Tags', 'Persons'])
         .then(function(data){
-            console.log(data);
 
             var persons = data.Persons
             var tags = data.Tags
 
             persons.thisIsYou.post().then(function(result){
                 var profile = result[0]
-
 
                 profile = RestService.initRestObject(result[0].data);
                 console.log(profile)
@@ -21,8 +19,10 @@ define(function(require) {
                 console.log(profile.roles)
 
                 console.log('demands: ');
-                console.log(profile.myDemands.get())
 
+                profile.myDemands.get().then(function(demands){
+                    console.log(demands);
+                });
 
                 return result
             });
