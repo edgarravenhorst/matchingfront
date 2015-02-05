@@ -1,4 +1,6 @@
-<h2>Profiel</h2>
-<section ng-controller="ProfileController">
-    uniqueItemId: {{uniqueItemId}}
+<section>
+    <h2>Profiel {{profile.firstName.value}} {{profile.middleName.value}} {{profile.lastName.value}}</h2>
+    <section>
+        Geboortedatum: {{profile.birthDay.value}}
+    </section>
 </section>
