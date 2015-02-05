@@ -79,7 +79,6 @@ define(function(require) {
                         }.bind(this), function(errordata){
                             return errordata
                         })
-
                     });
                 }
             }

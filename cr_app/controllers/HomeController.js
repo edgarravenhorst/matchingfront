@@ -11,9 +11,14 @@ define(function(require) {
             var tags = data.Tags
 
             persons.thisIsYou.post().then(function(result){
-                var profile =
-
+                var profile
                 profile = RestService.initRestObject(result[0].data);
+
+                $scope.name = '';
+                if (profile.firstName) $scope.name += profile.firstName
+                if (profile.middleName) $scope.name += ' ' + profile.middleName
+                if (profile.lastName) $scope.name += ' ' + profile.lastName
+
                 console.log('--------------------');
                 console.log('>> This is you members: ');
                 console.log(profile)

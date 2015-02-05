@@ -1,8 +1,12 @@
+<section style="width:50%; margin:auto">
+    <h1>Hallo, {{ name }}</h1>
+    </section>
+
 <section id="searchProfiles" ng-controller="PersonController">
     <h2>Zoeken in personen</h2>
     <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type achternaam"/>
     <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
-    <hr/>
+
     <ul ng-show="searchQuery">
         <li ng-show="result"ng-repeat="result in results">
             <a href="#/profile/{{result.lastName}}">
@@ -14,11 +18,11 @@
         </li>
     </ul>
 </section>
-
-
-
+<hr>
+<section style="width:50%; margin:auto">
+<h3>Mijn vraag & aanbod</h3>
 <section id="PersonalDemands">
-     <h2>Vragen</h2>
+     <h4><strong>Vragen</strong></h4>
 <!--    <input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type trefwoord"/>
     <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
     <hr/>-->
@@ -32,7 +36,7 @@
 </section>
 
 <section id="PersonalSupplies">
-     <h2>Aanbod</h2>
+     <h4><strong>Aanbod</strong></h4>
     <!--<input ng-keyup="search()" ng-model="searchQuery" type="text" value="" placeholder="type trefwoord"/>
     <span ng-show="searchQuery">Je zocht naar: {{ searchQuery }}</span>
     <hr/>-->
@@ -45,7 +49,7 @@
     </ul>
 </section>
 
-
+</section>
 
 <!--
 <h4>Alle Tags</h4>
