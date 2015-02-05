@@ -16,9 +16,10 @@ require.config({
 require(
     ['routes', 'modules',
      'services/RestService',
-     'controllers/HomeController'
+     'controllers/HomeController',
+     'controllers/ProfileController'
     ],
-    function(routes, modules, RestService, HomeController) {
+    function(routes, modules, RestService, HomeController, ProfileController) {
 
         var dependencies = [
             'ngRoute',
@@ -33,7 +34,7 @@ require(
 
         application.service('RestService', ['$http', '$q', RestService])
         application.controller('HomeController', ['$scope', 'RestService', HomeController])
-
+        application.controller('ProfileController', ['$scope', 'RestService', ProfileController])
         angular.bootstrap(document, ['Xtalus']);
 
     }
