@@ -30,6 +30,7 @@ define(function(require) {
 
         this.initMember = function(memberdata){
             var initMember = this.initMember;
+
             var Member = function(){
                 this.id = 0;
                 this.rawdata = memberdata;
@@ -80,9 +81,6 @@ define(function(require) {
 
 
                             member = initMember(obj.data);
-                            console.log(member);
-                            member.appel = obj.data;
-
                             return initMember(obj.data);
 
                         }.bind(this), function(errordata){
@@ -92,8 +90,16 @@ define(function(require) {
                     });
                 }
             }
+
+
             console.log(memberdata)
             if (memberdata.memberType == 'property') return memberdata.value
+            if (memberdata.memberType == 'collection') {
+                collection = new Member()
+                collection.values = memberdata.value
+                return collection
+            }
+
             return new Member();
         }
 
