@@ -32,9 +32,10 @@ require(
 
         var application = angular.module('Xtalus', dependencies);
 
-        application.service('RestService', ['$http', '$q', RestService])
-        application.controller('HomeController', ['$scope', 'RestService', HomeController])
+        application.service('RestService', RestService)
+        application.controller('HomeController', HomeController)
         application.controller('ProfileController', ['$scope', 'RestService', ProfileController])
+
         angular.bootstrap(document, ['Xtalus']);
 
     }
