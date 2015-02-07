@@ -15,7 +15,7 @@ require.config({
 
 require(
     ['routes', 'modules',
-     'services/RestService',
+     'providers/RestService',
      'controllers/HomeController',
      'controllers/ProfileController',
      'controllers/PersonController',

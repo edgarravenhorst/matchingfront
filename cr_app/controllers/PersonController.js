@@ -20,6 +20,11 @@ define(function(require) {
 
                     var persons = data.Persons
 
+                     persons.findPersons.post({}).then(function(person){
+                        console.log('error:')
+                        console.log(person)
+                     })
+
                     persons.findPersons.post({lastName:$scope.searchQuery}).then(function(person){
                         if(person[0]){
                             var data = person[0].data.members

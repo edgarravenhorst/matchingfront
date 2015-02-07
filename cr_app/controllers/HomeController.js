@@ -3,60 +3,56 @@ define(function(require) {
     function HomeController($scope, RestService){
         this.$inject = ['$scope', 'RestService'];
 
-        console.log('>> Person & Tag members');
-        RestService.getServices(['Tags', 'Persons'])
-        .then(function(data){
-            console.log('----------------------------------------------------------------------');
-            var persons = data.Persons
-            var tags = data.Tags
 
-            persons.thisIsYou.post().then(function(result){
-                var profile
-                profile = RestService.initRestObject(result[0].data);
+        RestService.getServices(['Tags', 'Persons', 'Organisations', 'Demands', 'Profiles', 'TagCategories'])
+        .then(function(data){
+
+            var persons = data.Persons,
+                tags = data.Tags,
+                tagsCategories = data.TagCategories
+
+            console.log('=== Services ============================================================');
+            console.log(data);
+            console.log('-------------------------------------------------------------------------');
+
+            persons.thisIsYou().then(function(profile){
 
                 $scope.name = '';
                 if (profile.firstName) $scope.name += profile.firstName
                 if (profile.middleName) $scope.name += ' ' + profile.middleName
                 if (profile.lastName) $scope.name += ' ' + profile.lastName
 
-                console.log('--------------------');
-                console.log('>> This is you members: ');
+                console.log('=== userData ============================================================');
                 console.log(profile)
-                console.log('----------------------------------------------------------------------');
+                console.log('-------------------------------------------------------------------------');
 
-                console.log('>> profile roles: ');
-                console.log(profile.roles)
-                console.log('----------------------------------------------------------------------');
-
-
-                profile.myDemands.get().then(function(collection){
-                    console.log('--------------------');
-                    console.log('>> profile demands: ');
-                    console.log(collection.values);
-                    $scope.demands = collection.values;
-                    console.log('----------------------------------------------------------------------');
+                profile.myDemands().then(function(collection){
+                    $scope.demands = collection;
                 });
 
-
-                 profile.mySupplies.get().then(function(collection){
-                    console.log('--------------------');
-                    console.log('>> profile supplies: ');
-                    console.log(collection.values);
-                    $scope.supplies = collection.values;
-                    console.log('----------------------------------------------------------------------');
+                profile.mySupplies().then(function(collection){
+                    $scope.supplies = collection;
                 });
+            });
 
-                return result
+            tags.allTags().then(function(collection){
+                console.log('=== All tags: ============================================================');
+                console.log(collection);
+                console.log('-------------------------------------------------------------------------');
+                $scope.tags = collection;
+            });
+
+            tagsCategories.allTagCategories().then(function(collection){
+                $scope.createTag = function(e){
+                    collection[0].newTag({
+                        tagDescription: $scope.tagName
+                    }).then(function(result){
+                        console.log(result)
+                    })
+                }
             });
 
 
-            tags.allTags.post().then(function(result){
-                console.log('All tags: ');
-                console.log(result);
-                console.log('----------------------------------------------------------------------');
-
-                $scope.tags = result;
-            });
         })
     };
 
