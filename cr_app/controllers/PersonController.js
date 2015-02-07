@@ -20,26 +20,21 @@ define(function(require) {
 
                     var persons = data.Persons
 
-                     persons.findPersons.post({}).then(function(person){
-                        console.log('error:')
-                        console.log(person)
-                     })
+                    persons.findPersons({lastName:$scope.searchQuery}).then(function(person){
+                        var picture = ''
 
-                    persons.findPersons.post({lastName:$scope.searchQuery}).then(function(person){
-                        if(person[0]){
-                            var data = person[0].data.members
-                            console.log(data);
+                        if(person.firstName){
                             // convert picture string base64
-                            if(data.picture.value){
-                                picture = data.picture.value;
+                            if(person.picture){
+                                picture = person.picture;
                                 picture = picture.split(':');
                                 picture = picture[2];
                             }
 
-                            if(data.middleName.value)
-                                $scope.results =  [{lastName: data.lastName.value ,value: data.firstName.value + ' ' + data.middleName.value + ' ' + data.lastName.value,picture: picture}]
+                            if(data.middleName)
+                                $scope.results =  [{lastName: person.lastName ,value: person.firstName + ' ' + person.middleName + ' ' + person.lastName, picture: picture}]
                             else
-                                $scope.results =  [{lastName: data.lastName.value ,value: data.firstName.value + ' ' + data.lastName.value,picture: picture}]
+                                $scope.results =  [{lastName: person.lastName ,value: person.firstName + ' ' + person.lastName, picture: picture}]
                         }
 
                         else{
@@ -52,11 +47,7 @@ define(function(require) {
                 })
 
             }
-
-
         }
-
-
     };
 
     return PersonController;

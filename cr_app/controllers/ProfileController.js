@@ -13,10 +13,10 @@ define(function(require) {
 
                     var persons = data.Persons
 
-                    persons.findPersons.post({lastName:$routeParams.lastName}).then(function(person){
-                        if(person[0]){
+                    persons.findPersons({lastName:$routeParams.lastName}).then(function(profile){
+                        if(profile.firstName){
 
-                            $scope.profile = RestService.initRestObject(person[0].data);
+                            $scope.profile = profile
 
                             if($scope.profile.picture){
                                 picture = $scope.profile.picture;
@@ -24,8 +24,6 @@ define(function(require) {
                                 picture = picture[2];
                                 $scope.profile.picture = picture;
                             }
-
-
 
                             console.log($scope.profile);
 
