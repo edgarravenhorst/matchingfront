@@ -31,7 +31,7 @@ define(function(require) {
                                 picture = picture[2];
                             }
 
-                            if(data.middleName)
+                            if(person.middleName)
                                 $scope.results =  [{lastName: person.lastName ,value: person.firstName + ' ' + person.middleName + ' ' + person.lastName, picture: picture}]
                             else
                                 $scope.results =  [{lastName: person.lastName ,value: person.firstName + ' ' + person.lastName, picture: picture}]

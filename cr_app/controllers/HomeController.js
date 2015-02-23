@@ -4,8 +4,12 @@ define(function(require) {
         this.$inject = ['$scope', 'RestService'];
 
 
-        RestService.getServices(['Tags', 'Persons', 'Organisations', 'Demands', 'Profiles', 'TagCategories'])
-        .then(function(data){
+        RestService.Initialize().then(function(get){
+
+            get.activePerson().then(function(result){
+                console.log(result)
+            });
+           /*
 
             var persons = data.Persons,
                 tags = data.Tags,
@@ -40,9 +44,17 @@ define(function(require) {
                 console.log(collection);
                 console.log('-------------------------------------------------------------------------');
                 $scope.tags = collection;
+
+                $scope.deleteTag = function(tag){
+                   tag.DeleteTag({areYouSure: true}).then(function(result){
+                        $scope.tags = result
+                    })
+                }
+
             });
 
             tagsCategories.allTagCategories().then(function(collection){
+
                 $scope.createTag = function(e){
                     collection[0].newTag({
                         tagDescription: $scope.tagName
@@ -50,9 +62,10 @@ define(function(require) {
                         console.log(result)
                     })
                 }
+
             });
 
-
+*/
         })
     };
 

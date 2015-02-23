@@ -1,4 +1,3 @@
-
 define(function (require) {
     'use strict';
 
@@ -6,18 +5,24 @@ define(function (require) {
         var service = this;
         this.$inject =  ['$http', '$q'];
 
-        this.RestURL = 'http://xtalus.apps.gedge.nl/simple/restful/services/info.matchingservice.dom.Api.api/';
+        this.baseURL = 'http://xtalus.apps.gedge.nl/simple/restful/';
+        this.servicesURL = this.baseURL + 'services/';
 
-        this.Initialize = function () {
-            return $http.get(this.RestURL).then(function (result) {
-                console.log(result)
+        this.getServices = function (selectedServices) {
+            var calls = [];
+
+            angular.forEach(selectedServices, function (serviceName) {
+                calls.push($http.get(this.servicesURL + serviceName));
+            }.bind(this));
+
+            return this.getRestData(calls).then(function (result) {
                 var promises = {};
 
                 angular.forEach(result, function (obj, i) {
                     promises[i] = (this.initRestObject(obj));
                 }.bind(this));
 
-                return $q.all(promises).then(function(result){return result.data});
+                return $q.all(promises);
 
             }.bind(this));
         };

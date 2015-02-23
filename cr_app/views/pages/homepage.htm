@@ -49,11 +49,12 @@
         <h4><strong>Tags</strong></h4>
         <input ng-model="tagName" type="text" placeholder="tagnaam"/>
         <button ng-click="createTag()">Toevoegen</button>
-        <ul>
-            <li ng-show="supplies" ng-repeat="tag in tags">
-                <a href="#/profile/{{supply.title}}">
-                    {{ tag.tagDescription }}
-                </a>
+        <ul style="clear:both; margin:20px; padding:20px 0;">
+            <li style='float:left; width:33%' ng-show="supplies" ng-repeat="tag in tags">
+
+                {{ tag.tagDescription }}
+
+                <a href="" ng-click="deleteTag(tag)">x</a>
             </li>
         </ul>
     </section>
