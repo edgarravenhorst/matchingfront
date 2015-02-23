@@ -6,10 +6,38 @@ define(function(require) {
 
         RestService.Initialize().then(function(get){
 
-            get.activePerson().then(function(result){
-                console.log(result)
+            get.activePerson().then(function(profile){
+
+                $scope.name = '';
+                if (profile.firstName) $scope.name += profile.firstName
+                if (profile.middleName) $scope.name += ' ' + profile.middleName
+                if (profile.lastName) $scope.name += ' ' + profile.lastName
+                if (profile.roles) $scope.roles = profile.roles
+
+                if(profile.picture){
+                    picture = profile.picture;
+                   picture = picture.split(':');
+                    picture = picture[2];
+                   $scope.picture = picture;
+                }
+
+                profile.collectDemands().then(function(collection){
+                    $scope.demands = collection;
+                    console.log(collection);
+                });
+
+                profile.collectSupplies().then(function(collection){
+                    $scope.supplies = collection;
+                });
+
+                console.log(profile);
+
             });
-           /*
+
+
+            //console.log(get);
+
+            /*
 
             var persons = data.Persons,
                 tags = data.Tags,
