@@ -47,13 +47,21 @@ define(function (require) {
 
             Action = function () {
 
+                this.method = 'GET'
+
                 this.call = function (params) {
 
                     return $http({
                         method: memberdata.links[0].method,
-                        url: memberdata.links[0].href + '/invoke',
-                        cache: false,
-                        params: params
+                        url: memberdata.links[0].href,
+                        cache: false
+                    }).then(function(result){
+                        return $http({
+                            method: result.data.links[2].method,
+                            url: result.data.links[2].href,
+                            cache: false,
+                            params: params
+                        })
                     })
                     .then(function (obj) {
                         var promises = {};
@@ -75,10 +83,10 @@ define(function (require) {
                             return list;
                         });
 
-                    }, service.logError);
+                    }, service.logError)
                 };
-            };
 
+            };
 
             if (memberdata.memberType === 'property')
                 return memberdata.value;
