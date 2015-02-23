@@ -15,12 +15,10 @@ define(function(require) {
 
             if($scope.searchQuery){
 
-                RestService.getServices(['Persons'])
+                RestService.Initialize()
                 .then(function(data){
-
-                    var persons = data.Persons
-
-                    persons.findPersons({lastName:$scope.searchQuery}).then(function(person){
+                    console.log(data);
+                    data.findPersons({searchInLastName:$scope.searchQuery}).then(function(person){
                         var picture = ''
 
                         if(person.firstName){

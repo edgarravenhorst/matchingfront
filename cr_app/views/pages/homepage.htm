@@ -1,5 +1,7 @@
 <section style="width:50%; margin:auto">
+    <img class='profile' width="75" height="75" ng-src="data:image/png;base64,{{picture}}"/>
     <h1>Hallo, {{ name }}</h1>
+    <h3>({{ roles }})</h3>
 </section>
 
 <section id="searchProfiles" ng-controller="PersonController">
@@ -23,7 +25,6 @@
     <h3>Mijn vraag & aanbod</h3>
     <section id="PersonalDemands">
         <h4><strong>Vragen</strong></h4>
-
         <ul >
             <li ng-show="demands" ng-repeat="demand in demands">
                 <a href="#/profile/{{demand.title}}">
