@@ -8,12 +8,11 @@ define(function(require) {
 
             if($routeParams.lastName){
 
-                RestService.getServices(['Persons'])
+                RestService.Initialize()
                 .then(function(data){
+                    var persons = data;
 
-                    var persons = data.Persons
-
-                    persons.findPersons({lastName:$routeParams.lastName}).then(function(profile){
+                    persons.findPersons({searchInLastName:$routeParams.lastName}).then(function(profile){
                         if(profile.firstName){
 
                             $scope.profile = profile

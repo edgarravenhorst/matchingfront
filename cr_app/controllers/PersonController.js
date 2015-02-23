@@ -17,8 +17,10 @@ define(function(require) {
 
                 RestService.Initialize()
                 .then(function(data){
-                    console.log(data);
-                    data.findPersons({searchInLastName:$scope.searchQuery}).then(function(person){
+
+                    persons = data;
+
+                    persons.findPersons({searchInLastName:$scope.searchQuery}).then(function(person){
                         var picture = ''
 
                         if(person.firstName){
