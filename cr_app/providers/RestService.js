@@ -10,7 +10,7 @@ define(function (require) {
 
         this.Initialize = function () {
             return $http.get(this.RestURL).then(function (result) {
-                console.log(result)
+                //console.log(result)
                 var promises = {};
 
                 angular.forEach(result, function (obj, i) {
@@ -27,22 +27,13 @@ define(function (require) {
                 Action, action;
 
             Collection = function () {
+
                 this.collect = function (params) {
-                    return $http.get(memberdata.links[0].href).then(function (result) {
-
-                        return $http({
-                            method: result.data.links[0].method,
-                            url: result.data.links[0].href,
-                            cache: false,
-                            params: params
-                        })
-                        .then(function (obj) {
-                            //console.log(service.initRestMember(obj.data));
-                            return service.initRestMember(obj.data);
-                        }, service.logError);
-
-                    });
+                    return $http.get(memberdata.links[0].href).then(function (obj) {
+                        return service.initRestMember(obj.data);
+                    }, service.logError);;
                 };
+
             };
 
             Action = function () {
